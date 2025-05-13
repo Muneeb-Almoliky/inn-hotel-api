@@ -1,0 +1,187 @@
+2025-05-14 01:18:03.216 +03:00 [INF] Registered 5 endpoints in 1,613 milliseconds.
+2025-05-14 01:18:04.784 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+PRAGMA journal_mode = 'wal';
+2025-05-14 01:18:04.881 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Contributors" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Contributors" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NOT NULL,
+    "Status" INTEGER NOT NULL,
+    "PhoneNumber_CountryCode" TEXT NULL,
+    "PhoneNumber_Number" TEXT NULL,
+    "PhoneNumber_Extension" TEXT NULL
+);
+2025-05-14 01:18:05.093 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:18:05.243 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 7), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Contributors" ("Name", "Status")
+VALUES (@p0, @p1)
+RETURNING "Id";
+2025-05-14 01:18:05.255 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 8), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Contributors" ("Name", "Status")
+VALUES (@p0, @p1)
+RETURNING "Id";
+2025-05-14 01:18:05.445 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:18:05.450 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:18:05.528 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:18:05.529 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:18:05.530 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:18:40.057 +03:00 [INF] Registered 5 endpoints in 462 milliseconds.
+2025-05-14 01:18:40.854 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:18:41.073 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:18:41.215 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:18:41.220 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:18:41.756 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:18:41.758 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:18:41.758 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:19:41.511 +03:00 [INF] Registered 5 endpoints in 368 milliseconds.
+2025-05-14 01:19:42.267 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:19:42.498 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:19:42.681 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:19:42.687 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:19:43.240 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:19:43.241 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:19:43.243 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:22:42.752 +03:00 [INF] Registered 5 endpoints in 161 milliseconds.
+2025-05-14 01:22:43.310 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:22:43.495 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:22:43.560 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:22:43.565 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:22:43.609 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:22:43.611 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:22:43.612 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:23:31.785 +03:00 [INF] Registered 5 endpoints in 323 milliseconds.
+2025-05-14 01:23:32.487 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:23:32.694 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:23:32.829 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:23:32.834 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:23:32.927 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:23:32.929 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:23:32.930 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:26:13.378 +03:00 [INF] Registered 5 endpoints in 385 milliseconds.
+2025-05-14 01:26:14.148 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:26:14.357 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:26:14.505 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:26:14.510 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:26:14.582 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:26:14.584 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:26:14.585 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:26:45.175 +03:00 [INF] Registered 5 endpoints in 156 milliseconds.
+2025-05-14 01:26:45.718 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:26:45.903 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:26:45.964 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:26:45.969 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:26:46.012 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:26:46.014 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:26:46.015 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:26:46.709 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/ - null null
+2025-05-14 01:26:46.806 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/ - 404 0 null 98.6724ms
+2025-05-14 01:26:46.814 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:57679/, Response status code: 404
+2025-05-14 01:26:51.291 +03:00 [INF] Registered 5 endpoints in 148 milliseconds.
+2025-05-14 01:26:51.817 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:26:52.004 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:26:52.095 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:26:52.103 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:26:52.147 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:26:52.149 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:26:52.150 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:26:54.631 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/ - null null
+2025-05-14 01:26:54.699 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/ - 404 0 null 69.1031ms
+2025-05-14 01:26:54.708 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:57679/, Response status code: 404
+2025-05-14 01:34:40.229 +03:00 [INF] Registered 5 endpoints in 458 milliseconds.
+2025-05-14 01:34:41.072 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:34:41.290 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:34:41.436 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:34:41.441 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:34:41.950 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:34:41.952 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:34:41.952 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:36:42.145 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/ - null null
+2025-05-14 01:36:42.274 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/ - 404 0 null 134.0704ms
+2025-05-14 01:36:42.282 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:57679/, Response status code: 404
+2025-05-14 01:41:01.545 +03:00 [INF] Registered 5 endpoints in 373 milliseconds.
+2025-05-14 01:41:02.388 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:41:02.643 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:41:02.802 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:41:02.808 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:41:02.870 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:41:02.871 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:41:02.872 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:41:03.167 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger - null null
+2025-05-14 01:41:03.346 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger - 302 0 null 214.0519ms
+2025-05-14 01:41:03.352 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 01:41:03.393 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 41.0939ms
+2025-05-14 01:41:03.396 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/swagger-ui-bundle.js - null null
+2025-05-14 01:41:03.396 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.css - null null
+2025-05-14 01:41:03.396 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/swagger-ui.css - null null
+2025-05-14 01:41:03.559 +03:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2025-05-14 01:41:03.560 +03:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-05-14 01:41:03.561 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.css - 200 218 text/css 165.1522ms
+2025-05-14 01:41:03.564 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/swagger-ui-standalone-preset.js - null null
+2025-05-14 01:41:03.571 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/swagger-ui.css - 200 152073 text/css 175.2091ms
+2025-05-14 01:41:03.578 +03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-05-14 01:41:03.578 +03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-05-14 01:41:03.579 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-14 01:41:03.582 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/swagger-ui-standalone-preset.js - 200 230294 text/javascript 18.2454ms
+2025-05-14 01:41:03.584 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/swagger-ui-bundle.js - 200 1452754 text/javascript 187.6423ms
+2025-05-14 01:41:03.593 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/_framework/aspnetcore-browser-refresh.js - 200 16509 application/javascript; charset=utf-8 13.0309ms
+2025-05-14 01:41:03.596 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/_vs/browserLink - null null
+2025-05-14 01:41:03.645 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/_vs/browserLink - 200 null text/javascript; charset=UTF-8 49.263ms
+2025-05-14 01:41:03.803 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 01:41:03.823 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/favicon-32x32.png - null null
+2025-05-14 01:41:03.825 +03:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-05-14 01:41:03.828 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/favicon-32x32.png - 200 628 image/png 4.8647ms
+2025-05-14 01:41:03.921 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 117.9106ms
+2025-05-14 01:58:58.489 +03:00 [INF] Registered 5 endpoints in 1,415 milliseconds.
+2025-05-14 01:58:59.803 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-14 01:59:00.009 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-14 01:59:00.103 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-14 01:59:00.104 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 01:59:00.105 +03:00 [INF] Hosting environment: Development
+2025-05-14 01:59:00.107 +03:00 [INF] Content root path: F:\code\third-year\semester-2\c#\project\InnHotel\src\InnHotel.Web
+2025-05-14 01:59:00.207 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 01:59:00.302 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 95.2021ms
+2025-05-14 01:59:00.504 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 01:59:00.550 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-14 01:59:00.999 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 495.271ms

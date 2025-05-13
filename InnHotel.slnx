@@ -1,0 +1,30 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="CleanArchitecture.nuspec" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/InnHotel.AspireHost/InnHotel.AspireHost.csproj" />
+    <Project Path="src/InnHotel.Core/InnHotel.Core.csproj" />
+    <Project Path="src/InnHotel.Infrastructure/InnHotel.Infrastructure.csproj" />
+    <Project Path="src/InnHotel.ServiceDefaults/InnHotel.ServiceDefaults.csproj" />
+    <Project Path="src/InnHotel.UseCases/InnHotel.UseCases.csproj" />
+    <Project Path="src/InnHotel.Web/InnHotel.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InnHotel.FunctionalTests/InnHotel.FunctionalTests.csproj">
+      <BuildDependency Project="src/InnHotel.Web/InnHotel.Web.csproj" />
+    </Project>
+    <Project Path="tests/InnHotel.IntegrationTests/InnHotel.IntegrationTests.csproj">
+      <BuildDependency Project="src/InnHotel.Infrastructure/InnHotel.Infrastructure.csproj" />
+    </Project>
+    <Project Path="tests/InnHotel.UnitTests/InnHotel.UnitTests.csproj" />
+  </Folder>
+</Solution>
