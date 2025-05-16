@@ -1,5 +1,6 @@
 ﻿using Ardalis.ListStartupServices;
 using InnHotel.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace InnHotel.Web.Configurations;
 
@@ -36,8 +37,12 @@ public static class MiddlewareConfig
     try
     {
       var context = services.GetRequiredService<AppDbContext>();
-      //          context.Database.Migrate();
-      context.Database.EnsureCreated();
+      
+      if (app.Environment.IsDevelopment())
+      {
+        await context.Database.MigrateAsync();
+      }
+
       await SeedData.InitializeAsync(context);
     }
     catch (Exception ex)

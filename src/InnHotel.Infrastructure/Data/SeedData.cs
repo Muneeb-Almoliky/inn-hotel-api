@@ -2,6 +2,7 @@
 using InnHotel.Core.GuestAggregate;
 using InnHotel.Core.RoomAggregate;
 using InnHotel.Core.ReservationAggregate;
+using InnHotel.Core.ServiceAggregate;
 
 namespace InnHotel.Infrastructure.Data;
 
@@ -41,30 +42,29 @@ public static class SeedData
   }
 
   public static async Task PopulateTestDataAsync(AppDbContext dbContext)
-  {
-    // Add Branches
+{
     dbContext.Branches.AddRange(MainBranch, DowntownBranch);
     await dbContext.SaveChangesAsync();
 
-    // Add Room Types
     dbContext.RoomTypes.AddRange(StandardRoom, Suite);
     await dbContext.SaveChangesAsync();
 
-    // Add Rooms
     var rooms = new List<Room>
-        {
-            new(MainBranch.Id, StandardRoom.Id, "101", RoomStatus.Available, 1),
-            new(MainBranch.Id, StandardRoom.Id, "102", RoomStatus.Available, 1),
-            new(MainBranch.Id, Suite.Id, "201", RoomStatus.Available, 2)
-        };
+    {
+        new(MainBranch.Id, StandardRoom.Id, "101", RoomStatus.Available, 1),
+        new(MainBranch.Id, StandardRoom.Id, "102", RoomStatus.Available, 1),
+        new(MainBranch.Id, Suite.Id,      "201", RoomStatus.Available, 2)
+    };
     dbContext.Rooms.AddRange(rooms);
 
-    // Add Guest
     dbContext.Guests.Add(TestGuest);
-
     await dbContext.SaveChangesAsync();
 
-    // Add Sample Reservation
+    var breakfast = new Service(MainBranch.Id, "Breakfast", 20.00m, "Continental breakfast");
+    var spa       = new Service(DowntownBranch.Id, "Spa",        50.00m, "Relaxing spa session");
+    dbContext.Services.AddRange(breakfast, spa);
+    await dbContext.SaveChangesAsync();
+
     var reservation = new Reservation(
         TestGuest.Id,
         DateOnly.FromDateTime(DateTime.Now.AddDays(7)),
@@ -74,9 +74,10 @@ public static class SeedData
     );
 
     reservation.AddRoom(rooms[0].Id, 99.99m);
-    reservation.AddService(1, 2, 50.00m);
+    reservation.AddService(breakfast.Id, 2, breakfast.Price);
 
     dbContext.Reservations.Add(reservation);
     await dbContext.SaveChangesAsync();
-  }
+}
+
 }

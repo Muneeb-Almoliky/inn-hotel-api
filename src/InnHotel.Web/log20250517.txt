@@ -1,0 +1,24 @@
+2025-05-17 00:24:12.237 +03:00 [INF] Registered 5 endpoints in 4,351 milliseconds.
+2025-05-17 00:24:16.581 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-17 00:24:17.547 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-17 00:24:18.264 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-17 00:24:18.287 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-17 00:24:18.544 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-17 00:24:18.548 +03:00 [INF] Hosting environment: Development
+2025-05-17 00:24:18.552 +03:00 [INF] Content root path: C:\Users\Mohammed Hidarah\Desktop\inn-hotel-api\src\InnHotel.Web
+2025-05-17 00:30:47.875 +03:00 [INF] Registered 5 endpoints in 991 milliseconds.
+2025-05-17 00:30:49.345 +03:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2025-05-17 00:30:49.670 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2025-05-17 00:30:49.938 +03:00 [INF] Now listening on: https://localhost:57679
+2025-05-17 00:30:49.945 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-05-17 00:30:50.026 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-17 00:30:50.028 +03:00 [INF] Hosting environment: Development
+2025-05-17 00:30:50.030 +03:00 [INF] Content root path: C:\Users\Mohammed Hidarah\Desktop\inn-hotel-api\src\InnHotel.Web
