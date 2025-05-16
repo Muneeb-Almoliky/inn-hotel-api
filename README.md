@@ -15,6 +15,8 @@ A modern hotel management API built with ASP.NET Core and Clean Architecture pri
    git clone https://github.com/Muneeb-Almoliky/inn-hotel-api.git
    cd InnHotel
    ```
+2. Configure your database connection
+
 2. Run the application
    ```bash
    dotnet run --project src/InnHotel.Web

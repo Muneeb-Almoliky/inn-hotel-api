@@ -185,3 +185,63 @@ SELECT EXISTS (
 2025-05-14 01:59:00.504 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
 2025-05-14 01:59:00.550 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
 2025-05-14 01:59:00.999 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 495.271ms
+2025-05-14 02:32:45.388 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 02:32:45.394 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 5.4622ms
+2025-05-14 02:32:45.561 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 02:32:45.565 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 3.4124ms
+2025-05-14 02:32:53.872 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:57679/Contributors/1 - application/json 33
+2025-05-14 02:32:53.880 +03:00 [INF] Executing endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:32:53.967 +03:00 [INF] Executed endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:32:53.970 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:57679/Contributors/1 - 400 null application/problem+json; charset=utf-8 97.4184ms
+2025-05-14 02:32:59.407 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:57679/Contributors/1 - application/json 33
+2025-05-14 02:32:59.412 +03:00 [INF] Executing endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:32:59.419 +03:00 [INF] Executed endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:32:59.424 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:57679/Contributors/1 - 400 null application/problem+json; charset=utf-8 17.5476ms
+2025-05-14 02:33:00.953 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:57679/Contributors/1 - application/json 33
+2025-05-14 02:33:00.958 +03:00 [INF] Executing endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:33:00.960 +03:00 [INF] Executed endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:33:00.961 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:57679/Contributors/1 - 400 null application/problem+json; charset=utf-8 8.347ms
+2025-05-14 02:33:03.871 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:57679/Contributors/1 - application/json 33
+2025-05-14 02:33:03.875 +03:00 [INF] Executing endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:33:03.877 +03:00 [INF] Executed endpoint 'HTTP: PUT /Contributors/{ContributorId:int}'
+2025-05-14 02:33:03.878 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:57679/Contributors/1 - 400 null application/problem+json; charset=utf-8 7.5048ms
+2025-05-14 02:33:36.178 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/Contributors - null null
+2025-05-14 02:33:36.182 +03:00 [INF] Executing endpoint 'HTTP: GET /Contributors'
+2025-05-14 02:33:36.198 +03:00 [INF] Handling ListContributorsQuery
+2025-05-14 02:33:36.199 +03:00 [INF] Property Skip : null
+2025-05-14 02:33:36.200 +03:00 [INF] Property Take : null
+2025-05-14 02:33:36.282 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT Id, Name, PhoneNumber_Number AS PhoneNumber FROM Contributors
+2025-05-14 02:33:36.290 +03:00 [INF] Handled ListContributorsQuery with Ardalis.Result.Result`1[System.Collections.Generic.IEnumerable`1[InnHotel.UseCases.Contributors.ContributorDTO]] in 79 ms
+2025-05-14 02:33:36.296 +03:00 [INF] Executed endpoint 'HTTP: GET /Contributors'
+2025-05-14 02:33:36.300 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/Contributors - 200 null application/json; charset=utf-8 121.1422ms
+2025-05-14 02:33:38.795 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/Contributors - null null
+2025-05-14 02:33:38.798 +03:00 [INF] Executing endpoint 'HTTP: GET /Contributors'
+2025-05-14 02:33:38.801 +03:00 [INF] Handling ListContributorsQuery
+2025-05-14 02:33:38.802 +03:00 [INF] Property Skip : null
+2025-05-14 02:33:38.804 +03:00 [INF] Property Take : null
+2025-05-14 02:33:38.862 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT Id, Name, PhoneNumber_Number AS PhoneNumber FROM Contributors
+2025-05-14 02:33:38.865 +03:00 [INF] Handled ListContributorsQuery with Ardalis.Result.Result`1[System.Collections.Generic.IEnumerable`1[InnHotel.UseCases.Contributors.ContributorDTO]] in 57 ms
+2025-05-14 02:33:38.866 +03:00 [INF] Executed endpoint 'HTTP: GET /Contributors'
+2025-05-14 02:33:38.868 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/Contributors - 200 null application/json; charset=utf-8 72.3906ms
+2025-05-14 02:47:37.571 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 02:47:37.575 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 3.9235ms
+2025-05-14 02:47:37.746 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 02:47:37.752 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 5.4006ms
+2025-05-14 02:47:37.971 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 02:47:37.974 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 3.072ms
+2025-05-14 02:47:38.084 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 02:47:38.087 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 2.607ms
+2025-05-14 02:47:39.222 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 02:47:39.226 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 4.0494ms
+2025-05-14 02:47:39.317 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 02:47:39.319 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 2.2ms
+2025-05-14 02:47:39.451 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 02:47:39.453 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 2.5753ms
+2025-05-14 02:47:39.509 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 02:47:39.512 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 2.7455ms
+2025-05-14 02:50:01.034 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/index.html - null null
+2025-05-14 02:50:01.037 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/index.html - 200 null text/html; charset=utf-8 2.6801ms
+2025-05-14 02:50:01.124 +03:00 [INF] Request starting HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - null null
+2025-05-14 02:50:01.127 +03:00 [INF] Request finished HTTP/2 GET https://localhost:57679/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 2.9821ms

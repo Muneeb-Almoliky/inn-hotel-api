@@ -5,15 +5,15 @@ namespace InnHotel.IntegrationTests.Data;
 
 public abstract class BaseEfRepoTestFixture
 {
-  protected AppDbContext _dbContext;
+  //protected AppDbContext _dbContext;
 
-  protected BaseEfRepoTestFixture()
-  {
-    var options = CreateNewContextOptions();
-    var _fakeEventDispatcher = Substitute.For<IDomainEventDispatcher>();
+  //protected BaseEfRepoTestFixture()
+  //{
+  //  var options = CreateNewContextOptions();
+  //  var _fakeEventDispatcher = Substitute.For<IDomainEventDispatcher>();
 
-    _dbContext = new AppDbContext(options, _fakeEventDispatcher);
-  }
+  //  //_dbContext = new AppDbContext(options);
+  //}
 
   protected static DbContextOptions<AppDbContext> CreateNewContextOptions()
   {
@@ -32,8 +32,8 @@ public abstract class BaseEfRepoTestFixture
     return builder.Options;
   }
 
-  protected EfRepository<Contributor> GetRepository()
-  {
-    return new EfRepository<Contributor>(_dbContext);
-  }
+  //protected EfRepository<Contributor> GetRepository()
+  //{
+  //  return new EfRepository<Contributor>(_dbContext);
+  //}
 }
