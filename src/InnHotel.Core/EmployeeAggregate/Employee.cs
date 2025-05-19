@@ -12,14 +12,8 @@ public class Employee(
     string? phone = null
 ) : EntityBase, IAggregateRoot
 {
-    protected Employee()
-    : this(0, string.Empty, string.Empty, string.Empty, default, string.Empty)
-    { }
-
     public int BranchId { get; } = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
-
     public Branch Branch { get; set; } = null!; 
-
     public string FirstName { get; } = Guard.Against.NullOrEmpty(firstName, nameof(firstName));
     public string LastName { get; } = Guard.Against.NullOrEmpty(lastName, nameof(lastName));
     public string Email { get; } = email;
@@ -29,7 +23,6 @@ public class Employee(
 
     private readonly List<EmployeeRole> _roles = new();
     public IReadOnlyCollection<EmployeeRole> Roles => _roles.AsReadOnly();
-
     public void AssignRole(Role role)
       => _roles.Add(new EmployeeRole(Id, role.Id));
 }

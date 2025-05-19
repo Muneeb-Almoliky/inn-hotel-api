@@ -5,8 +5,6 @@ namespace InnHotel.Core.BranchAggregate;
 
 public class Branch(string name, string location) : EntityBase, IAggregateRoot
 {
-    protected Branch() : this(string.Empty, string.Empty) { }
-
     public string Name { get; private set; } = Guard.Against.NullOrEmpty(name, nameof(name));
     public string Location { get; private set; } = Guard.Against.NullOrEmpty(location, nameof(location));
 
