@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:15.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: innhotel
+      POSTGRES_DB: innhotel-db
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d innhotel-db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:
