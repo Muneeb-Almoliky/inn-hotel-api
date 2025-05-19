@@ -16,13 +16,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
   public DbSet<Branch> Branches { get; set; }
   public DbSet<Guest> Guests { get; set; }
   public DbSet<Reservation> Reservations { get; set; }
-
   public DbSet<RoomType> RoomTypes { get; set; }
   public DbSet<Room> Rooms { get; set; }
   public DbSet<Employee> Employees { get; set; }
-  public DbSet<Role> Roles { get; set; }
   public DbSet<Service> Services { get; set; }
-
   public DbSet<ReservationRoom> ReservationRooms { get; set; }
   public DbSet<ReservationService> ReservationServices { get; set; }
 
