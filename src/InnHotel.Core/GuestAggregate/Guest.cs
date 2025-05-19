@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InnHotel.Core.GuestAggregate;
+﻿namespace InnHotel.Core.GuestAggregate;
 
 public class Guest(
     string firstName,
@@ -16,9 +10,6 @@ public class Guest(
     string? address = null
 ) : EntityBase, IAggregateRoot
 {
-    // Constructor with 'this' initializer to resolve CS8862
-    protected Guest() : this(string.Empty, string.Empty, string.Empty, string.Empty) { }
-
     public string FirstName { get; } = Guard.Against.NullOrEmpty(firstName, nameof(firstName));
     public string LastName { get; } = Guard.Against.NullOrEmpty(lastName, nameof(lastName));
     public string IdProofType { get; } = Guard.Against.NullOrEmpty(idProofType, nameof(idProofType));

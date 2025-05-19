@@ -4,26 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InnHotel.Core.BranchAggregate;
-
 namespace InnHotel.Core.RoomAggregate;
 
-public class RoomType : EntityBase
+public class RoomType(int branchId, string name, decimal basePrice, int capacity, string? description = null) : EntityBase
 {
-    public RoomType(int branchId, string name, decimal basePrice, int capacity, string? description = null)
-    {
-        BranchId = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
-        Name = Guard.Against.NullOrEmpty(name, nameof(name));
-        BasePrice = Guard.Against.NegativeOrZero(basePrice, nameof(basePrice));
-        Capacity = Guard.Against.NegativeOrZero(capacity, nameof(capacity));
-        Description = description;
-    }
-
-    protected RoomType() : this(0, string.Empty, 0, 0, null) { }
-
-    public int BranchId { get; }
-    public Branch Branch { get; set; } = null!;
-    public string Name { get; }
-    public decimal BasePrice { get; }
-    public int Capacity { get; }
-    public string? Description { get; }
+    public int BranchId { get; private set; } = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
+    public Branch Branch { get; private set; } = null!;
+    public string Name { get; private set; } = Guard.Against.NullOrEmpty(name, nameof(name));
+    public decimal BasePrice { get; private set; } = Guard.Against.NegativeOrZero(basePrice, nameof(basePrice));
+    public int Capacity { get; private set; } = Guard.Against.NegativeOrZero(capacity, nameof(capacity));
+    public string? Description { get; } = description;
 }

@@ -1,15 +1,7 @@
 ﻿namespace InnHotel.Core.EmployeeAggregate;
 
-public class EmployeeRole : EntityBase
+public class EmployeeRole(int employeeId, int roleId) : EntityBase
 {
-    public EmployeeRole(int employeeId, int roleId)
-    {
-        EmployeeId = Guard.Against.NegativeOrZero(employeeId, nameof(employeeId));
-        RoleId = Guard.Against.NegativeOrZero(roleId, nameof(roleId));
-    }
-
-    protected EmployeeRole() : this(0, 0) { }
-
-    public int EmployeeId { get; }
-    public int RoleId { get; }
+    public int EmployeeId { get; private set; } = Guard.Against.NegativeOrZero(employeeId, nameof(employeeId));
+    public int RoleId { get; private set; } = Guard.Against.NegativeOrZero(roleId, nameof(roleId));
 }
