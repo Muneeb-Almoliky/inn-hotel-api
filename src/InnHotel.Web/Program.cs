@@ -34,7 +34,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddAuthorization(options =>
 {
   options.AddPolicy("AdminsOnly", policy =>
-    policy.RequireRole(Roles.Admin, Roles.SuperAdmin));
+   policy.RequireRole(Roles.Admin, Roles.SuperAdmin));
 });
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
