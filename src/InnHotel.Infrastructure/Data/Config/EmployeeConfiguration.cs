@@ -1,5 +1,4 @@
 ﻿using InnHotel.Core.EmployeeAggregate;
-using InnHotel.Core.BranchAggregate;
 namespace InnHotel.Infrastructure.Data.Config;
 
 public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
@@ -30,18 +29,6 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
           .IsRequired()
           .HasMaxLength(50);
 
-        e.Property(x => x.Email)
-          .HasColumnName("email")
-          .IsRequired()
-          .HasMaxLength(100);
-        e.HasIndex(x => x.Email)
-         .IsUnique()
-         .HasDatabaseName("UX_employees_email");
-
-        e.Property(x => x.Phone)
-          .HasColumnName("phone")
-          .HasMaxLength(20);
-
         e.Property(x => x.HireDate)
           .HasColumnName("hire_date")
           .IsRequired();
@@ -55,34 +42,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
           .WithMany()
           .HasForeignKey(x => x.BranchId)
           .OnDelete(DeleteBehavior.Cascade);
-    }
-}
 
-public class RoleConfiguration : IEntityTypeConfiguration<Role>
-{
-  public void Configure(EntityTypeBuilder<Role> r)
-  {
-    r.ToTable("roles");
-    r.HasKey(x => x.Id).HasName("role_id");
-
-    r.Property(x => x.Name)
-      .HasColumnName("role_name")
-      .IsRequired()
-      .HasMaxLength(50);
-    r.HasIndex(x => x.Name)
-     .IsUnique()
-     .HasDatabaseName("UX_roles_rolename");
-
-    r.Property(x => x.Description)
-      .HasColumnName("description");
+        e.HasOne(e => e.User)
+            .WithOne() 
+            .HasForeignKey<Employee>(e => e.UserId)
+            .IsRequired(false) 
+            .OnDelete(DeleteBehavior.Cascade);
   }
 }
 
-public class EmployeeRoleConfiguration : IEntityTypeConfiguration<EmployeeRole>
-{
-  public void Configure(EntityTypeBuilder<EmployeeRole> er)
-  {
-    er.ToTable("employee_roles");
-    er.HasKey(x => new { x.EmployeeId, x.RoleId });
-  }
-}

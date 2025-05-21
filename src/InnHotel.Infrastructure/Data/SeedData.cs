@@ -3,11 +3,18 @@ using InnHotel.Core.GuestAggregate;
 using InnHotel.Core.RoomAggregate;
 using InnHotel.Core.ReservationAggregate;
 using InnHotel.Core.ServiceAggregate;
+using InnHotel.Core.AuthAggregate;
+using Microsoft.AspNetCore.Identity;
 
 namespace InnHotel.Infrastructure.Data;
 
 public static class SeedData
 {
+  // Constants for default credentials
+  private const string SuperAdminEmail = "super@innhotel.com";
+  private const string AdminEmail = "admin@innhotel.com";
+
+  // Application data entities
   public static readonly Branch MainBranch = new("Main Hotel", "123 Seaside Boulevard");
   public static readonly Branch DowntownBranch = new("Downtown Suites", "456 City Center Road");
 
@@ -34,36 +41,54 @@ public static class SeedData
       phone: "+1234567890",
       address: "123 Main Street");
 
-  public static async Task InitializeAsync(AppDbContext dbContext)
+  public static async Task InitializeAsync(IServiceProvider serviceProvider)
   {
-    if (await dbContext.Branches.AnyAsync()) return; // Already seeded
+    using var scope = serviceProvider.CreateScope();
+    var services = scope.ServiceProvider;
 
-    await PopulateTestDataAsync(dbContext);
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    var logger = loggerFactory.CreateLogger("SeedData");
+    var config = services.GetRequiredService<IConfiguration>();
+
+    try
+    {
+      var context = services.GetRequiredService<AppDbContext>();
+      await SeedApplicationDataAsync(context);
+
+      await SeedIdentityAsync(services, config);
+    }
+    catch (Exception ex)
+    {
+      logger.LogError(ex, "An error occurred while seeding the database");
+      throw;
+    }
   }
 
-  public static async Task PopulateTestDataAsync(AppDbContext dbContext)
-{
-    dbContext.Branches.AddRange(MainBranch, DowntownBranch);
-    await dbContext.SaveChangesAsync();
+  private static async Task SeedApplicationDataAsync(AppDbContext context)
+  {
+    if (await context.Branches.AnyAsync()) return;
 
-    dbContext.RoomTypes.AddRange(StandardRoom, Suite);
-    await dbContext.SaveChangesAsync();
+    context.Branches.AddRange(MainBranch, DowntownBranch);
+    await context.SaveChangesAsync();
+
+    context.RoomTypes.AddRange(StandardRoom, Suite);
+    await context.SaveChangesAsync();
 
     var rooms = new List<Room>
-    {
-        new(MainBranch.Id, StandardRoom.Id, "101", RoomStatus.Available, 1),
-        new(MainBranch.Id, StandardRoom.Id, "102", RoomStatus.Available, 1),
-        new(MainBranch.Id, Suite.Id,      "201", RoomStatus.Available, 2)
-    };
-    dbContext.Rooms.AddRange(rooms);
+        {
+            new(MainBranch.Id, StandardRoom.Id, "101", RoomStatus.Available, 1),
+            new(MainBranch.Id, StandardRoom.Id, "102", RoomStatus.Available, 1),
+            new(MainBranch.Id, Suite.Id, "201", RoomStatus.Available, 2)
+        };
+    context.Rooms.AddRange(rooms);
 
-    dbContext.Guests.Add(TestGuest);
-    await dbContext.SaveChangesAsync();
+    context.Guests.Add(TestGuest);
+    await context.SaveChangesAsync();
 
     var breakfast = new Service(MainBranch.Id, "Breakfast", 20.00m, "Continental breakfast");
-    var spa       = new Service(DowntownBranch.Id, "Spa",        50.00m, "Relaxing spa session");
-    dbContext.Services.AddRange(breakfast, spa);
-    await dbContext.SaveChangesAsync();
+    var spa = new Service(DowntownBranch.Id, "Spa", 50.00m, "Relaxing spa session");
+    context.Services.AddRange(breakfast, spa);
+    await context.SaveChangesAsync();
 
     var reservation = new Reservation(
         TestGuest.Id,
@@ -76,8 +101,66 @@ public static class SeedData
     reservation.AddRoom(rooms[0].Id, 99.99m);
     reservation.AddService(breakfast.Id, 2, breakfast.Price);
 
-    dbContext.Reservations.Add(reservation);
-    await dbContext.SaveChangesAsync();
-}
+    context.Reservations.Add(reservation);
+    await context.SaveChangesAsync();
+  }
 
+  private static async Task SeedIdentityAsync(
+      IServiceProvider services,
+      IConfiguration config)
+  {
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // Seed roles
+    foreach (var role in new[] { Roles.SuperAdmin, Roles.Admin, Roles.Receptionist, Roles.Housekeeping })
+    {
+      if (!await roleManager.RoleExistsAsync(role))
+      {
+        await roleManager.CreateAsync(new IdentityRole(role));
+      }
+    }
+
+    // Seed Super Admin from configuration
+    var superAdmin = await SeedUserAsync(
+        userManager,
+        config["SeedUsers:SuperAdmin:Email"] ?? SuperAdminEmail,
+        config["SeedUsers:SuperAdmin:Password"] ?? "Sup3rP@ssword!",
+        new[] { Roles.SuperAdmin, Roles.Admin });
+
+    // Seed Admin from configuration
+    var admin = await SeedUserAsync(
+        userManager,
+        config["SeedUsers:Admin:Email"] ?? AdminEmail,
+        config["SeedUsers:Admin:Password"] ?? "Adm1nP@ssword!",
+        new[] { Roles.Admin });
+  }
+
+  private static async Task<ApplicationUser?> SeedUserAsync(
+      UserManager<ApplicationUser> userManager,
+      string email,
+      string password,
+      string[] roles)
+  {
+    var user = await userManager.FindByEmailAsync(email);
+    if (user != null) return user;
+
+    user = new ApplicationUser
+    {
+      UserName = email,
+      Email = email,
+      EmailConfirmed = true
+    };
+
+    var result = await userManager.CreateAsync(user, password);
+    if (!result.Succeeded) return null;
+
+    foreach (var role in roles)
+    {
+      await userManager.AddToRoleAsync(user, role);
+    }
+
+    return user;
+  }
+ 
 }
