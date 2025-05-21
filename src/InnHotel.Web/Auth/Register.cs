@@ -18,7 +18,7 @@ public class Register(IMediator _mediator)
   public override void Configure()
   {
     Post(RegisterRequest.Route);
-    AllowAnonymous();
+    Roles(AuthRoles.Admin, AuthRoles.SuperAdmin);
     Summary(s =>
     {
       s.Summary     = "Register a new user account (Admin/SuperAdmin only)";
