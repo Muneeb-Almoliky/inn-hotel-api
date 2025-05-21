@@ -22,10 +22,10 @@ public class LoginHandler(
     {
         var user = await userManager.FindByEmailAsync(request.Email);
         if (user is null)
-          return Result<AuthResponse>.Unauthorized();
+          return Result<AuthResponse>.Unauthorized("Invalid Credintials");
 
         if (!await userManager.CheckPasswordAsync(user, request.Password))
-            return Result<AuthResponse>.Unauthorized();
+            return Result<AuthResponse>.Unauthorized("Invalid Credintials");
 
         var roles = await userManager.GetRolesAsync(user);
 
