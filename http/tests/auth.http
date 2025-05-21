@@ -1,0 +1,26 @@
+@baseUrl = https://localhost:57679
+
+### Login
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Register (Admin/SuperAdmin only)
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "email": "newuser@example.com",
+    "password": "NewUser123!",
+    "firstName": "John",
+    "lastName": "Doe",
+    "branchId": 1,
+    "hireDate": "2024-05-01",
+    "position": "Receptionist"
+}
