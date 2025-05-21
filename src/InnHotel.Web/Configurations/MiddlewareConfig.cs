@@ -6,24 +6,26 @@ namespace InnHotel.Web.Configurations;
 
 public static class MiddlewareConfig
 {
-  public static async Task<IApplicationBuilder> UseAppMiddlewareAndSeedDatabase(this WebApplication app)
+  public static async Task<WebApplication> UseAppMiddlewareAndSeedDatabase(this WebApplication app)
   {
     if (app.Environment.IsDevelopment())
     {
       app.UseDeveloperExceptionPage();
-      app.UseShowAllServicesMiddleware(); // see https://github.com/ardalis/AspNetCoreStartupServices
+      app.UseShowAllServicesMiddleware();
     }
     else
     {
-      app.UseDefaultExceptionHandler(); // from FastEndpoints
+      app.UseDefaultExceptionHandler();
       app.UseHsts();
     }
 
+    // wire up FastEndpoints + Swagger/static files
     app.UseFastEndpoints()
-        .UseSwaggerGen(); // Includes AddFileServer and static files middleware
+       .UseSwaggerGen();
 
-    app.UseHttpsRedirection(); // Note this will drop Authorization headers
+    app.UseHttpsRedirection();
 
+    // now seed
     await SeedDatabase(app);
 
     return app;
@@ -37,13 +39,10 @@ public static class MiddlewareConfig
     try
     {
       var context = services.GetRequiredService<AppDbContext>();
-      
       if (app.Environment.IsDevelopment())
-      {
         await context.Database.MigrateAsync();
-      }
 
-      await SeedData.InitializeAsync(context);
+      await SeedData.InitializeAsync(services);
     }
     catch (Exception ex)
     {

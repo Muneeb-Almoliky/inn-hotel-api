@@ -1,4 +1,5 @@
-﻿using InnHotel.Core.BranchAggregate;
+﻿using InnHotel.Core.AuthAggregate;
+using InnHotel.Core.BranchAggregate;
 
 namespace InnHotel.Core.EmployeeAggregate;
 
@@ -7,7 +8,8 @@ public class Employee(
     string firstName,
     string lastName,
     DateOnly hireDate,
-    string position
+    string position,
+    string? userId
 ) : EntityBase, IAggregateRoot
 {
     public int BranchId { get; } = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
@@ -16,5 +18,6 @@ public class Employee(
     public string LastName { get; } = Guard.Against.NullOrEmpty(lastName, nameof(lastName));
     public DateOnly HireDate { get; } = hireDate;
     public string Position { get; } = Guard.Against.NullOrEmpty(position, nameof(position));
-
+    public string? UserId { get; private set; } = userId;
+    public ApplicationUser? User { get; set; }
 }

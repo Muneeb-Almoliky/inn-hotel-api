@@ -42,6 +42,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
           .WithMany()
           .HasForeignKey(x => x.BranchId)
           .OnDelete(DeleteBehavior.Cascade);
-    }
+
+        e.HasOne(e => e.User)
+            .WithOne() 
+            .HasForeignKey<Employee>(e => e.UserId)
+            .IsRequired(false) 
+            .OnDelete(DeleteBehavior.Cascade);
+  }
 }
 

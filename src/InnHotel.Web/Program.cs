@@ -1,7 +1,12 @@
-﻿using FastEndpoints;
+﻿using System.Text;
+using FastEndpoints;
+using InnHotel.Core.AuthAggregate;
 using InnHotel.Infrastructure.Data;
 using InnHotel.Web.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 using Serilog;
 using Serilog.Extensions.Logging;
@@ -22,10 +27,52 @@ builder.Host.UseSerilog();
 var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection");
 ValidateDatabaseConnection(connectionString);
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(options =>
+{
+  options.AddPolicy("AdminsOnly", policy =>
+    policy.RequireRole(Roles.Admin, Roles.SuperAdmin));
+});
+
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.ASCII.GetBytes(jwtSettings["Secret"]!);
+
+builder.Services.AddAuthentication(options =>
+{
+  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+ )
+   .AddJwtBearer(options =>
+   {
+     options.SaveToken = true;
+     options.RequireHttpsMetadata = false;
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+       ValidateIssuerSigningKey = true,
+       IssuerSigningKey = new SymmetricSecurityKey(key),
+       ValidateIssuer = true,
+       ValidateAudience = true,
+       ValidIssuer = jwtSettings["Issuer"],
+       ValidAudience = jwtSettings["Audience"],
+       ClockSkew = TimeSpan.Zero
+     };
+   }
+    );
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
+
 // Dependency Injection configuration
 ConfigureServices(builder);
 
 var app = builder.Build();
+
+
 
 // Application startup configuration
 await ConfigureApplication(app);

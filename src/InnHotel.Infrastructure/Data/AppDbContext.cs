@@ -1,18 +1,20 @@
 ﻿using InnHotel.Core.BranchAggregate;
-using InnHotel.Core.ContributorAggregate;
 using InnHotel.Core.EmployeeAggregate;
 using InnHotel.Core.ReservationAggregate;
 using InnHotel.Core.ServiceAggregate;
 using InnHotel.Core.RoomAggregate;
 using InnHotel.Core.GuestAggregate;
+using InnHotel.Core.AuthAggregate;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace InnHotel.Infrastructure.Data;
 
 
 public class AppDbContext(DbContextOptions<AppDbContext> options,
-  IDomainEventDispatcher? dispatcher) : DbContext(options)
+  IDomainEventDispatcher? dispatcher) : IdentityDbContext<ApplicationUser>(options)
 {
   private readonly IDomainEventDispatcher? _dispatcher = dispatcher;
+  public DbSet<RefreshToken> RefreshTokens { get; set; }
   public DbSet<Branch> Branches { get; set; }
   public DbSet<Guest> Guests { get; set; }
   public DbSet<Reservation> Reservations { get; set; }
