@@ -69,7 +69,7 @@ ConfigureServices(builder);
 
 var app = builder.Build();
 
-
+app.UsePathBase("/api");
 
 // Application startup configuration
 await ConfigureApplication(app);
@@ -106,7 +106,10 @@ static void ConfigureServices(WebApplicationBuilder builder)
       .AddOptionConfigs(builder.Configuration, logger, builder)
       .AddServiceConfigs(logger, builder)
       .AddFastEndpoints()
-      .SwaggerDocument(o => o.ShortSchemaNames = true);
+      .SwaggerDocument(o => {
+        o.ShortSchemaNames = true;
+        o.AutoTagPathSegmentIndex = 2;
+        });
 }
 
 static async Task ConfigureApplication(WebApplication app)
