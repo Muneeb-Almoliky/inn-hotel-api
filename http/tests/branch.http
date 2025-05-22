@@ -20,6 +20,10 @@ Authorization: Bearer {{login.response.body.accessToken}}
     "location": "123 Main Street, Downtown"
 }
 
+### Get Branch by ID
+GET {{baseUrl}}/api/branches/1
+Authorization: Bearer {{login.response.body.accessToken}}
+
 ### Get All Branches (Default Pagination: page 1, size 10)
 GET {{baseUrl}}/api/branches
 Authorization: Bearer {{login.response.body.accessToken}}
