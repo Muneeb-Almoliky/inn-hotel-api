@@ -30,7 +30,7 @@ GET {{baseUrl}}/api/guests/22
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Delete Guest
-DELETE {{baseUrl}}/api/guests/20
+DELETE {{baseUrl}}/api/guests/22
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Get All Guests (Default Pagination: page 1, size 10)
@@ -58,7 +58,7 @@ GET {{baseUrl}}/api/guests?pageNumber=0
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Update Guest
-PUT {{baseUrl}}/api/guests/1
+PUT {{baseUrl}}/api/guests/22
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.accessToken}}
 
@@ -66,7 +66,7 @@ Authorization: Bearer {{login.response.body.accessToken}}
     "firstName": "Jane",
     "lastName": "Smith-Updated",
     "idProofType": "Passport",
-    "idProofNumber": "XY789012",
+    "idProofNumber": "aXY7890123",
     "email": "jane.updated@example.com",
     "phone": "+1234567891",
     "address": "789 New Street"
