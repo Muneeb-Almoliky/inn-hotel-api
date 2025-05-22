@@ -4,8 +4,8 @@ public class RefreshToken(string token, string userId, DateTime expiresAt, strin
   public string Token { get; set; } = Guard.Against.NullOrEmpty(token, nameof(token));
   public string UserId { get; set; } = Guard.Against.NullOrEmpty(userId, nameof(userId));
   public ApplicationUser User { get; private set; } = null!;
-  public bool Revoked { get; private set; } = false;
-  public DateTime? RevokedAt { get; private set; }
+  public bool Revoked { get; set; } = false;
+  public DateTime? RevokedAt { get; set; }
   public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
   public DateTime ExpiresAt { get; set; } = expiresAt;
   public string? DeviceInfo { get; private set; } = deviceInfo;
