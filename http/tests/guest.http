@@ -1,0 +1,73 @@
+@baseUrl = https://localhost:57679
+
+### Login first to get token
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Create Guest
+POST {{baseUrl}}/api/guests
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "firstName": "Jane",
+    "lastName": "Smiths",
+    "idProofType": "Passport",
+    "idProofNumber": "XY7ss89013",
+    "email": "jane.smiths@example.com",
+    "phone": "+1234567891",
+    "address": "456 Park Avenue"
+}
+
+### Get Guest by ID
+GET {{baseUrl}}/api/guests/26
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Delete Guest
+DELETE {{baseUrl}}/api/guests/22
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get All Guests (Default Pagination: page 1, size 10)
+GET {{baseUrl}}/api/guests
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Guests - Page 1 with 5 items
+GET {{baseUrl}}/api/guests?pageNumber=1&pageSize=5
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Guests - Page 2 with 5 items
+GET {{baseUrl}}/api/guests?pageNumber=2&pageSize=5
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Guests - With maximum page size (50)
+GET {{baseUrl}}/api/guests?pageSize=50
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Guests - Test invalid page size (should default to 50)
+GET {{baseUrl}}/api/guests?pageSize=100
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Guests - Test invalid page number (should default to 10)
+GET {{baseUrl}}/api/guests?pageNumber=0
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Update Guest
+PUT {{baseUrl}}/api/guests/22
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "firstName": "Jane",
+    "lastName": "Smith-Updated",
+    "idProofType": "Passport",
+    "idProofNumber": "aXY7890123",
+    "email": "jane.updated@example.com",
+    "phone": "+1234567891",
+    "address": "789 New Street"
+}

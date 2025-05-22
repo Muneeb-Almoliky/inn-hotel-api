@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using InnHotel.Core.AuthAggregate;
 using InnHotel.Infrastructure.Data;
+using InnHotel.Web.Common;
 using InnHotel.Web.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -42,24 +43,40 @@ builder.Services.AddAuthentication(options =>
   options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
   options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
   options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}
- )
-   .AddJwtBearer(options =>
-   {
-     options.SaveToken = true;
-     options.RequireHttpsMetadata = false;
-     options.TokenValidationParameters = new TokenValidationParameters
-     {
-       ValidateIssuerSigningKey = true,
-       IssuerSigningKey = new SymmetricSecurityKey(key),
-       ValidateIssuer = true,
-       ValidateAudience = true,
-       ValidIssuer = jwtSettings["Issuer"],
-       ValidAudience = jwtSettings["Audience"],
-       ClockSkew = TimeSpan.Zero
-     };
-   }
-    );
+})
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        ClockSkew = TimeSpan.Zero
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnChallenge = context =>
+        {
+            context.HandleResponse();
+
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "application/json";
+
+            var error = new FailureResponse(
+                401,
+                "Unauthorized: authentication is required."
+            );
+
+            return context.Response.WriteAsJsonAsync(error);
+        }
+    };
+});
 builder.Services.AddAuthentication(); 
 builder.Services.AddAuthorization();
 

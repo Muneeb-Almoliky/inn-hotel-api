@@ -19,7 +19,7 @@ A modern hotel management API built with ASP.NET Core and Clean Architecture pri
 
 2. Run the application
    ```bash
-   dotnet run --project src/InnHotel.Web
+   dotnet watch run --project src/InnHotel.Web
    ```
 ## API Documentation 
 Access the interactive Swagger UI at:  
