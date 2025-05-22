@@ -42,24 +42,40 @@ builder.Services.AddAuthentication(options =>
   options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
   options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
   options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}
- )
-   .AddJwtBearer(options =>
-   {
-     options.SaveToken = true;
-     options.RequireHttpsMetadata = false;
-     options.TokenValidationParameters = new TokenValidationParameters
-     {
-       ValidateIssuerSigningKey = true,
-       IssuerSigningKey = new SymmetricSecurityKey(key),
-       ValidateIssuer = true,
-       ValidateAudience = true,
-       ValidIssuer = jwtSettings["Issuer"],
-       ValidAudience = jwtSettings["Audience"],
-       ClockSkew = TimeSpan.Zero
-     };
-   }
-    );
+})
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        ClockSkew = TimeSpan.Zero
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnChallenge = context =>
+        {
+            context.HandleResponse(); // prevent default 401 response
+
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "application/json";
+
+            var error = new InnHotel.Web.Common.InnHotelErrorResponse(
+                401,
+                "Unauthorized: authentication is required."
+            );
+
+            return context.Response.WriteAsJsonAsync(error);
+        }
+    };
+});
 builder.Services.AddAuthentication(); 
 builder.Services.AddAuthorization();
 
