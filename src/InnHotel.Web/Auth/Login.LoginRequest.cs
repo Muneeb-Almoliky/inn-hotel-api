@@ -4,7 +4,7 @@ namespace InnHotel.Web.Auth;
 
 public class LoginRequest
 {
-  public const string Route = "/api/auth/login";
+  public const string Route = "/auth/login";
 
   [Required]
   [EmailAddress]
