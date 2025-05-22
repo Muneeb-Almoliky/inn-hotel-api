@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using FastEndpoints;
 using InnHotel.Core.AuthAggregate;
 using InnHotel.Infrastructure.Data;
 using InnHotel.Web.Configurations;
@@ -8,8 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql;
-using Serilog;
-using Serilog.Extensions.Logging;
 
 DotNetEnv.Env.Load();
 
@@ -33,7 +30,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.AddAuthorization(options =>
 {
-  options.AddPolicy("AdminsOnly", policy =>
+   options.AddPolicy("AdminsOnly", policy =>
    policy.RequireRole(Roles.Admin, Roles.SuperAdmin));
 });
 
@@ -63,7 +60,7 @@ builder.Services.AddAuthentication(options =>
      };
    }
     );
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(); 
 builder.Services.AddAuthorization();
 
 

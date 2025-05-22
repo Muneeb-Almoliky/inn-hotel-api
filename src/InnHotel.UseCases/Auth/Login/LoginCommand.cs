@@ -4,4 +4,4 @@ namespace InnHotel.UseCases.Auth.Login;
 public record LoginCommand(
     string Email,
     string Password
-) : ICommand<Result<AuthResponse>>;
+) : ICommand<Result<AuthResult>>;
