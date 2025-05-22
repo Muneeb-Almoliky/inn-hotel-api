@@ -42,5 +42,9 @@ public class GuestConfiguration : IEntityTypeConfiguration<Guest>
       .HasColumnName("id_proof_number")
       .IsRequired()
       .HasMaxLength(50);
+
+    g.HasIndex(x => x.IdProofNumber)
+      .IsUnique()
+      .HasDatabaseName("UX_guests_idproof_number");
   }
 }
