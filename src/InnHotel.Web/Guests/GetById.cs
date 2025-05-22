@@ -34,6 +34,8 @@ public class GetById(IMediator _mediator)
     if (result.IsSuccess)
     {
       Response = new GuestRecord(result.Value.Id, result.Value.FirstName, result.Value.LastName, result.Value.IdProofType, result.Value.IdProofNumber, result.Value.Email, result.Value.Phone, result.Value.Address);
+      await SendOkAsync(Response, cancellationToken);
+      return;
     }
 
     await SendAsync(new InnHotelErrorResponse(500, "An unexpected error occurred."), statusCode: 500, cancellation: cancellationToken);

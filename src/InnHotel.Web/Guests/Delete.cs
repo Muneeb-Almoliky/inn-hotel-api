@@ -34,7 +34,10 @@ public class Delete(IMediator _mediator)
 
     if (result.IsSuccess)
     {
-      await SendNoContentAsync(cancellationToken);
+      await SendAsync(new { status = 200, message = $"Guest with ID {request.GuestId} was successfully deleted" }, 
+        statusCode: 200, 
+        cancellation: cancellationToken);
+      return;
     }
 
     await SendAsync(new InnHotelErrorResponse(500, "An unexpected error occurred."), statusCode: 500, cancellation: cancellationToken);
