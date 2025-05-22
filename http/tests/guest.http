@@ -1,0 +1,53 @@
+@baseUrl = https://localhost:57679
+
+### Login first to get token
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Create Guest
+POST {{baseUrl}}/api/guests
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "idProofType": "Passport",
+    "idProofNumber": "XY789012",
+    "email": "jane.smith@example.com",
+    "phone": "+1234567890",
+    "address": "456 Park Avenue"
+}
+
+### Get Guest by ID
+GET {{baseUrl}}/api/guests/2
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Delete Guest
+DELETE {{baseUrl}}/api/guests/1
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get All Guests
+GET {{baseUrl}}/api/guests
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Update Guest
+PUT {{baseUrl}}/api/guests/1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "firstName": "Jane",
+    "lastName": "Smith-Updated",
+    "idProofType": "Passport",
+    "idProofNumber": "XY789012",
+    "email": "jane.updated@example.com",
+    "phone": "+1234567891",
+    "address": "789 New Street"
+}

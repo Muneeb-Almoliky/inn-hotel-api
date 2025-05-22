@@ -1,5 +1,5 @@
-﻿
-using InnHotel.UseCases.Guests.Delete;
+﻿using InnHotel.UseCases.Guests.Delete;
+using InnHotel.Web.Common;
 
 namespace InnHotel.Web.Guests;
 
@@ -27,7 +27,8 @@ public class Delete(IMediator _mediator)
 
     if (result.Status == ResultStatus.NotFound)
     {
-      await SendNotFoundAsync(cancellationToken);
+      var error = new InnHotelErrorResponse(404, $"Guest with ID {request.GuestId} not found");
+      await SendAsync(error, statusCode: 404, cancellation: cancellationToken);
       return;
     }
 
@@ -35,7 +36,7 @@ public class Delete(IMediator _mediator)
     {
       await SendNoContentAsync(cancellationToken);
     }
-    ;
-    // TODO: Handle other issues as needed
+
+    await SendAsync(new InnHotelErrorResponse(500, "An unexpected error occurred."), statusCode: 500, cancellation: cancellationToken);
   }
 }

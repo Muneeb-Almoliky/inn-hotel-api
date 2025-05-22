@@ -1,4 +1,5 @@
 ﻿using InnHotel.UseCases.Guests.Get;
+using InnHotel.Web.Common;
 
 namespace InnHotel.Web.Guests;
 
@@ -9,7 +10,7 @@ namespace InnHotel.Web.Guests;
 /// Takes a positive integer ID and returns a matching Guest record.
 /// </remarks>
 public class GetById(IMediator _mediator)
-  : Endpoint<GetGuestByIdRequest, GuestRecord>
+  : Endpoint<GetGuestByIdRequest, object>
 {
   public override void Configure()
   {
@@ -25,7 +26,8 @@ public class GetById(IMediator _mediator)
 
     if (result.Status == ResultStatus.NotFound)
     {
-      await SendNotFoundAsync(cancellationToken);
+      var error = new InnHotelErrorResponse(404, $"Guest with ID {request.GuestId} not found");
+      await SendAsync(error, statusCode: 404, cancellation: cancellationToken);
       return;
     }
 
@@ -33,5 +35,7 @@ public class GetById(IMediator _mediator)
     {
       Response = new GuestRecord(result.Value.Id, result.Value.FirstName, result.Value.LastName, result.Value.IdProofType, result.Value.IdProofNumber, result.Value.Email, result.Value.Phone, result.Value.Address);
     }
+
+    await SendAsync(new InnHotelErrorResponse(500, "An unexpected error occurred."), statusCode: 500, cancellation: cancellationToken);
   }
 }
