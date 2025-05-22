@@ -12,20 +12,20 @@ public class LoginHandler(
     ITokenService tokenService,
     IRepository<RefreshToken> refreshTokenRepo,
     IConfiguration config)
-    : ICommandHandler<LoginCommand, Result<AuthResponse>>
+    : ICommandHandler<LoginCommand, Result<AuthResult>>
 {
   private readonly IConfiguration _config = config;
 
-  public async Task<Result<AuthResponse>> Handle(
+  public async Task<Result<AuthResult>> Handle(
       LoginCommand request,
       CancellationToken cancellationToken)
     {
         var user = await userManager.FindByEmailAsync(request.Email);
         if (user is null)
-          return Result<AuthResponse>.Unauthorized("Invalid Credintials");
+          return Result<AuthResult>.Unauthorized("Invalid Credintials");
 
         if (!await userManager.CheckPasswordAsync(user, request.Password))
-            return Result<AuthResponse>.Unauthorized("Invalid Credintials");
+            return Result<AuthResult>.Unauthorized("Invalid Credintials");
 
         var roles = await userManager.GetRolesAsync(user);
 
@@ -53,8 +53,8 @@ public class LoginHandler(
 
         await refreshTokenRepo.AddAsync(refreshTokenEntity, cancellationToken);
 
-        return Result<AuthResponse>.Success(
-          new AuthResponse(
+        return Result<AuthResult>.Success(
+          new AuthResult(
             accessToken: accessToken,
             refreshToken: refreshToken,
             email: user.Email,
