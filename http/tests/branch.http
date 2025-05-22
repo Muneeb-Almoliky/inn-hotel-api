@@ -1,0 +1,21 @@
+@baseUrl = https://localhost:57679
+
+### Login first to get token
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Create Branch
+POST {{baseUrl}}/api/branches
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "name": "Downtown Branch B",
+    "location": "123 Main Street, Downtown"
+}
