@@ -17,11 +17,11 @@ Authorization: Bearer {{login.response.body.accessToken}}
 
 {
     "firstName": "Jane",
-    "lastName": "Smith",
+    "lastName": "Smiths",
     "idProofType": "Passport",
-    "idProofNumber": "XY789012",
-    "email": "jane.smith@example.com",
-    "phone": "+1234567890",
+    "idProofNumber": "XY789013",
+    "email": "jane.smiths@example.com",
+    "phone": "+1234567891",
     "address": "456 Park Avenue"
 }
 
