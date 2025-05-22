@@ -15,4 +15,12 @@ public class Branch(string name, string location) : EntityBase, IAggregateRoot
     public IReadOnlyCollection<Room> Rooms => _rooms.AsReadOnly();
     public IReadOnlyCollection<RoomType> RoomTypes => _roomTypes.AsReadOnly();
     public IReadOnlyCollection<Service> Services => _services.AsReadOnly();
+
+    public void UpdateDetails(
+        string name,
+        string location)
+    {
+        Name = Guard.Against.NullOrEmpty(name, nameof(name));
+        Location = Guard.Against.NullOrEmpty(location, nameof(location));
+    }
 }

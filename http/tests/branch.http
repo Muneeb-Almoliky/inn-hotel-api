@@ -47,3 +47,13 @@ Authorization: Bearer {{login.response.body.accessToken}}
 ### Get Branches - Test invalid page number (should default to 10)
 GET {{baseUrl}}/api/branches?pageNumber=0
 Authorization: Bearer {{login.response.body.accessToken}}
+
+### Update Branch
+PUT {{baseUrl}}/api/branches/1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "name": "Downtown Branch Updated",
+    "location": "456 New Street, Downtown"
+}
