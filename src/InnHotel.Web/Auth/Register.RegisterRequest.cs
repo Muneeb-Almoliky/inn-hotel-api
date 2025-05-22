@@ -5,7 +5,7 @@ namespace InnHotel.Web.Auth.Register;
 
 public class RegisterRequest : IRequest<Result<AuthResponse>>
 {
-  public const string Route = "/api/auth/register";
+  public const string Route = "/auth/register";
 
   [Required]
   [EmailAddress]

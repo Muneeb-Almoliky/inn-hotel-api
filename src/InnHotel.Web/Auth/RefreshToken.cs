@@ -11,7 +11,7 @@ public class RefreshToken(IMediator _mediator, IConfiguration config)
   private readonly IConfiguration _config = config;
   public override void Configure()
   {
-    Post("/api/auth/refresh");
+    Post("/auth/refresh");
     AllowAnonymous();
     Summary(s =>
         s.Summary = "Refresh access token using secure cookie");
