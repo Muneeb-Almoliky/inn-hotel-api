@@ -36,7 +36,7 @@ public class Update(IMediator _mediator)
         if (result.Status == ResultStatus.NotFound)
         {
             await SendAsync(
-                new InnHotelErrorResponse(404, $"Guest with ID {request.GuestId} not found"),
+                new FailureResponse(404, $"Guest with ID {request.GuestId} not found"),
                 statusCode: 404,
                 cancellation: cancellationToken);
             return;
@@ -45,7 +45,7 @@ public class Update(IMediator _mediator)
         if (result.Status == ResultStatus.Error)
         {
             await SendAsync(
-                new InnHotelErrorResponse(400, result.Errors.First()),
+                new FailureResponse(400, result.Errors.First()),
                 statusCode: 400,
                 cancellation: cancellationToken);
             return;
@@ -70,7 +70,7 @@ public class Update(IMediator _mediator)
         }
 
         await SendAsync(
-            new InnHotelErrorResponse(500, "An unexpected error occurred."),
+            new FailureResponse(500, "An unexpected error occurred."),
             statusCode: 500,
             cancellation: cancellationToken);
     }

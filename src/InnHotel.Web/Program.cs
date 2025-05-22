@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using InnHotel.Core.AuthAggregate;
 using InnHotel.Infrastructure.Data;
+using InnHotel.Web.Common;
 using InnHotel.Web.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -62,12 +63,12 @@ builder.Services.AddAuthentication(options =>
     {
         OnChallenge = context =>
         {
-            context.HandleResponse(); // prevent default 401 response
+            context.HandleResponse();
 
             context.Response.StatusCode = 401;
             context.Response.ContentType = "application/json";
 
-            var error = new InnHotel.Web.Common.InnHotelErrorResponse(
+            var error = new FailureResponse(
                 401,
                 "Unauthorized: authentication is required."
             );

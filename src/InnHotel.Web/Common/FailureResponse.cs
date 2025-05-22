@@ -3,7 +3,7 @@ namespace InnHotel.Web.Common;
 /// <summary>
 /// Standard API error response model.
 /// </summary>
-public record InnHotelErrorResponse
+public record FailureResponse
 {
     /// <summary>
     /// The HTTP status code associated with the error.
@@ -20,7 +20,7 @@ public record InnHotelErrorResponse
     /// </summary>
     public List<string>? Details { get; init; }
 
-    public InnHotelErrorResponse(int status, string message, List<string>? details = null)
+    public FailureResponse(int status, string message, List<string>? details = null)
     {
         Status = status;
         Message = message;

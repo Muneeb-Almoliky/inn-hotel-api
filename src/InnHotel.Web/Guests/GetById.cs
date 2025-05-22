@@ -26,7 +26,7 @@ public class GetById(IMediator _mediator)
 
     if (result.Status == ResultStatus.NotFound)
     {
-      var error = new InnHotelErrorResponse(404, $"Guest with ID {request.GuestId} not found");
+      var error = new FailureResponse(404, $"Guest with ID {request.GuestId} not found");
       await SendAsync(error, statusCode: 404, cancellation: cancellationToken);
       return;
     }
@@ -38,6 +38,6 @@ public class GetById(IMediator _mediator)
       return;
     }
 
-    await SendAsync(new InnHotelErrorResponse(500, "An unexpected error occurred."), statusCode: 500, cancellation: cancellationToken);
+    await SendAsync(new FailureResponse(500, "An unexpected error occurred."), statusCode: 500, cancellation: cancellationToken);
   }
 }

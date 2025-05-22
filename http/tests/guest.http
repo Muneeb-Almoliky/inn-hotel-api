@@ -26,7 +26,7 @@ Authorization: Bearer {{login.response.body.accessToken}}
 }
 
 ### Get Guest by ID
-GET {{baseUrl}}/api/guests/22
+GET {{baseUrl}}/api/guests/26
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Delete Guest
