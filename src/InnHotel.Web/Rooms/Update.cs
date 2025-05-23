@@ -1,6 +1,6 @@
-using InnHotel.UseCases.Rooms.Update;
+﻿using InnHotel.UseCases.Rooms.Update;
 using InnHotel.Web.Common;
-using InnHotel.Core.RoomAggregate;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Rooms;
 
@@ -16,6 +16,7 @@ public class Update(IMediator _mediator)
     public override void Configure()
     {
         Put(UpdateRoomRequest.Route);
+        Roles(AuthRoles.SuperAdmin, AuthRoles.Admin);
     }
 
     public override async Task HandleAsync(

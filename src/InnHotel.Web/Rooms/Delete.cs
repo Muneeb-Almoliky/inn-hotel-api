@@ -1,5 +1,6 @@
-using InnHotel.UseCases.Rooms.Delete;
+﻿using InnHotel.UseCases.Rooms.Delete;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Rooms;
 
@@ -15,6 +16,7 @@ public class Delete(IMediator _mediator)
   public override void Configure()
   {
     Delete(DeleteRoomRequest.Route);
+    Roles(AuthRoles.SuperAdmin, AuthRoles.Admin);
   }
 
   public override async Task HandleAsync(

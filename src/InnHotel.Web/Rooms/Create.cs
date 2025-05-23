@@ -1,5 +1,6 @@
-using InnHotel.UseCases.Rooms.Create;
+﻿using InnHotel.UseCases.Rooms.Create;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Rooms;
 
@@ -14,8 +15,9 @@ public class Create(IMediator _mediator)
 {
     public override void Configure()
     {
-        Post(CreateRoomRequest.Route);
-        Summary(s =>
+    Post(CreateRoomRequest.Route);
+    Roles(AuthRoles.SuperAdmin, AuthRoles.Admin);
+    Summary(s =>
         {
             s.ExampleRequest = new CreateRoomRequest
             {

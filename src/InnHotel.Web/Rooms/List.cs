@@ -1,6 +1,7 @@
-using FastEndpoints;
+﻿using FastEndpoints;
 using InnHotel.UseCases.Rooms.List;
 using InnHotel.Web.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InnHotel.Web.Rooms;
 
