@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql;
-
-DotNetEnv.Env.Load();
-
-var builder = WebApplication.CreateBuilder(args);
+using DotNetEnv;
+using Serilog;
 
 // Configure Serilog first
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .CreateLogger();
+
+var envPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".env");
+DotNetEnv.Env.Load(envPath);
+
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
@@ -80,13 +83,38 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthentication(); 
 builder.Services.AddAuthorization();
 
+// CORS configuration
+var allowedOriginsEnv = DotNetEnv.Env.GetString("ALLOWED_ORIGINS") 
+    ?? throw new InvalidOperationException("ALLOWED_ORIGINS environment variable is required");
+var allowedOrigins = allowedOriginsEnv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins(allowedOrigins)
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials()
+               .WithExposedHeaders("Content-Disposition")
+               .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+    });
+});
 
 // Dependency Injection configuration
 ConfigureServices(builder);
 
 var app = builder.Build();
 
+app.UseCors();
+
 app.UsePathBase("/api");
+// app.UseRouting();
+
+// Security
+// app.UseHttpsRedirection();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 // Application startup configuration
 await ConfigureApplication(app);
