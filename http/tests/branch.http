@@ -57,3 +57,7 @@ Authorization: Bearer {{login.response.body.accessToken}}
     "name": "Downtown Branch Updated",
     "location": "456 New Street, Downtown"
 }
+
+### Delete Branch
+DELETE {{baseUrl}}/api/branches/3858
+Authorization: Bearer {{login.response.body.accessToken}}
