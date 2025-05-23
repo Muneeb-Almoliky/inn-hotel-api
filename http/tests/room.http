@@ -18,7 +18,7 @@ Authorization: Bearer {{login.response.body.accessToken}}
 {
     "branchId": 1,
     "roomTypeId": 1,
-    "roomNumber": "107",
+    "roomNumber": "109",
     "status": 0,
     "floor": 1
 }
@@ -43,25 +43,16 @@ Authorization: Bearer {{login.response.body.accessToken}}
 GET {{baseUrl}}/api/rooms?pageSize=50
 Authorization: Bearer {{login.response.body.accessToken}}
 
-### Get Rooms by Branch ID
-GET {{baseUrl}}/api/rooms?branchId=1
-Authorization: Bearer {{login.response.body.accessToken}}
-
-### Get Rooms by Room Type ID
-GET {{baseUrl}}/api/rooms?roomTypeId=1
-Authorization: Bearer {{login.response.body.accessToken}}
-
-### Get Available Rooms
-GET {{baseUrl}}/api/rooms?status=0
-Authorization: Bearer {{login.response.body.accessToken}}
-
-### Update Room Status
-PATCH {{baseUrl}}/api/rooms/1/status
+### Update Room Details
+PUT {{baseUrl}}/api/rooms/9
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.accessToken}}
 
 {
-    "status": 2
+    "roomTypeId": 1,
+    "roomNumber": "109",
+    "status": 0,
+    "floor": 3
 }
 
 ### Delete Room

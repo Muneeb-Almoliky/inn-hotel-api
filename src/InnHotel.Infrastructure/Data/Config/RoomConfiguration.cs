@@ -10,7 +10,7 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
     {
         r.ToTable("rooms", t =>
         {
-            t.HasCheckConstraint("CK_rooms_status", "status IN ('Available','Occupied','Under Maintenance')");
+            t.HasCheckConstraint("CK_rooms_status", "status IN ('Available','Occupied','UnderMaintenance')");
             t.HasCheckConstraint("CK_rooms_floor", "floor >= 0");
         });
 

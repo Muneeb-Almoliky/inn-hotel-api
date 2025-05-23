@@ -31,5 +31,17 @@ public class Room(
 
     public void UpdateStatus(RoomStatus newStatus)
         => Status = newStatus;                           
+
+    public void UpdateDetails(
+        int roomTypeId,
+        string roomNumber,
+        RoomStatus status,
+        int floor)
+    {
+        RoomTypeId = Guard.Against.NegativeOrZero(roomTypeId, nameof(roomTypeId));
+        RoomNumber = Guard.Against.NullOrEmpty(roomNumber, nameof(roomNumber));
+        Status = status;
+        Floor = Guard.Against.Negative(floor, nameof(floor));
+    }
 }
 
