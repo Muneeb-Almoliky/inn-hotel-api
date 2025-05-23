@@ -1,5 +1,6 @@
 using InnHotel.UseCases.Branches.Update;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Branches;
 
@@ -15,9 +16,10 @@ public class Update(IMediator _mediator)
     public override void Configure()
     {
         Put(UpdateBranchRequest.Route);
-    }
+        Roles(AuthRoles.SuperAdmin);
+  }
 
-    public override async Task HandleAsync(
+  public override async Task HandleAsync(
         UpdateBranchRequest request,
         CancellationToken cancellationToken)
     {

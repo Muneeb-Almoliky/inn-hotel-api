@@ -1,5 +1,6 @@
 using InnHotel.UseCases.Branches.Create;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Branches;
 
@@ -15,6 +16,7 @@ public class Create(IMediator _mediator)
     public override void Configure()
     {
         Post(CreateBranchRequest.Route);
+        Roles(AuthRoles.SuperAdmin);
     }
 
     public override async Task HandleAsync(

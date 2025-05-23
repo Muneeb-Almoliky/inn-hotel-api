@@ -1,5 +1,6 @@
 using InnHotel.UseCases.Branches.Delete;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Branches;
 
@@ -15,6 +16,7 @@ public class Delete(IMediator _mediator)
   public override void Configure()
   {
     Delete(DeleteBranchRequest.Route);
+    Roles(AuthRoles.SuperAdmin);
   }
 
   public override async Task HandleAsync(
