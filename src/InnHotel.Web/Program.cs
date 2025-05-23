@@ -86,18 +86,17 @@ builder.Services.AddAuthorization();
 // CORS configuration
 var allowedOriginsEnv = DotNetEnv.Env.GetString("ALLOWED_ORIGINS") 
     ?? throw new InvalidOperationException("ALLOWED_ORIGINS environment variable is required");
-var allowedOrigins = allowedOriginsEnv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+var allowedOrigins = allowedOriginsEnv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToHashSet();
 
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins(allowedOrigins)
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials()
-               .WithExposedHeaders("Content-Disposition")
-               .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+        builder.SetIsOriginAllowed(origin => allowedOrigins.Contains(origin))
+               .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+               .WithHeaders("Content-Type", "Authorization", "Accept", "X-Requested-With", "Cookie")
+               .WithExposedHeaders("Content-Disposition", "Set-Cookie")
+               .AllowCredentials();
     });
 });
 
@@ -106,15 +105,11 @@ ConfigureServices(builder);
 
 var app = builder.Build();
 
-app.UseCors();
-
 app.UsePathBase("/api");
 // app.UseRouting();
-
-// Security
-// app.UseHttpsRedirection();
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseCors();
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Application startup configuration
 await ConfigureApplication(app);

@@ -12,9 +12,9 @@ public static class CookieHelpers
     {
       HttpOnly = true,
       Secure = true,
-      SameSite = SameSiteMode.Strict,
+      SameSite = SameSiteMode.None,
       Expires = DateTime.UtcNow.AddDays(expiryDays),
-      Path = "/"
+      Path = "/api/auth"
     });
   }
 }

@@ -1,4 +1,5 @@
 @baseUrl = https://localhost:57679
+@cookieJar = auth
 
 ### Login
 # @name login
@@ -9,6 +10,11 @@ Content-Type: application/json
     "email": "super@innhotel.com",
     "password": "Sup3rP@ssword!"
 }
+
+### Refresh Token
+# @name refresh
+POST {{baseUrl}}/api/auth/refresh
+Cookie: {{cookieJar}}
 
 ### Register (Admin/SuperAdmin only)
 POST {{baseUrl}}/api/auth/register

@@ -2,6 +2,7 @@
 using InnHotel.Core.AuthAggregate;
 using InnHotel.UseCases.Auth.Refresh;
 using InnHotel.Web.Helpers;
+using Serilog;
 
 namespace InnHotel.Web.Auth;
 
@@ -23,11 +24,14 @@ public class RefreshToken(IMediator _mediator, IConfiguration config)
     )
   {
     var refreshToken = HttpContext.Request.Cookies["refreshToken"];
+    Log.Information("Refresh token cookie value: {RefreshToken}", refreshToken ?? "null");
+    
     var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
     var userAgent = HttpContext.Request.Headers.UserAgent.ToString();
 
     if (string.IsNullOrEmpty(refreshToken))
     {
+      Log.Warning("Refresh token is missing in the request cookies");
       var unauthorized = Result<AuthResponse>.Unauthorized("Refresh token is required.");
 
       await SendResultAsync(unauthorized.ToMinimalApiResult());
