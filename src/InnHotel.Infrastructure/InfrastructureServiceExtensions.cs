@@ -25,7 +25,8 @@ public static class InfrastructureServiceExtensions
            .AddScoped<IListContributorsQueryService, ListContributorsQueryService>()
            .AddScoped<IDeleteContributorService, DeleteContributorService>()
             .AddScoped<ITokenService, TokenService>()
-            .AddScoped<IDeleteGuestService, DeleteGuestService>();
+            .AddScoped<IDeleteGuestService, DeleteGuestService>()
+            .AddScoped<IDeleteBranchService, DeleteBranchService>();
 
     logger.LogInformation("{Project} services registered", "Infrastructure");
 

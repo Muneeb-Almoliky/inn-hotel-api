@@ -1,0 +1,63 @@
+@baseUrl = https://localhost:57679
+
+### Login first to get token
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Create Branch
+POST {{baseUrl}}/api/branches
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "name": "Downtown Branch B",
+    "location": "123 Main Street, Downtown"
+}
+
+### Get Branch by ID
+GET {{baseUrl}}/api/branches/1
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get All Branches (Default Pagination: page 1, size 10)
+GET {{baseUrl}}/api/branches
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Branches - Page 1 with 5 items
+GET {{baseUrl}}/api/branches?pageNumber=1&pageSize=5
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Branches - Page 2 with 5 items
+GET {{baseUrl}}/api/branches?pageNumber=2&pageSize=5
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Branches - With maximum page size (50)
+GET {{baseUrl}}/api/branches?pageSize=50
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Branches - Test invalid page size (should default to 50)
+GET {{baseUrl}}/api/branches?pageSize=100
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Branches - Test invalid page number (should default to 10)
+GET {{baseUrl}}/api/branches?pageNumber=0
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Update Branch
+PUT {{baseUrl}}/api/branches/1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "name": "Downtown Branch Updated",
+    "location": "456 New Street, Downtown"
+}
+
+### Delete Branch
+DELETE {{baseUrl}}/api/branches/3858
+Authorization: Bearer {{login.response.body.accessToken}}
