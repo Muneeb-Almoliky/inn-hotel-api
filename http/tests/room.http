@@ -24,7 +24,7 @@ Authorization: Bearer {{login.response.body.accessToken}}
 }
 
 ### Get Room by ID
-GET {{baseUrl}}/api/rooms/1
+GET {{baseUrl}}/api/rooms/8
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Get All Rooms (Default Pagination: page 1, size 10)
