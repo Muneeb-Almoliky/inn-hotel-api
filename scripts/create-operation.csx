@@ -323,12 +323,52 @@ public class Update(IMediator _mediator)
     }}
 }}",
             
-            OperationType.Delete => $@"namespace InnHotel.UseCases.{_entityNamePlural}.Delete;
+            OperationType.Delete => $@"using InnHotel.UseCases.{_entityNamePlural}.Delete;
+using InnHotel.Web.Common;
 
-public record Delete{_entityNameSingular}Command(int {_entityNameSingular}Id) : ICommand<Result>;
+namespace InnHotel.Web.{_entityNamePlural};
 
+/// <summary>
+/// Delete a {_entityNameSingular}.
+/// </summary>
+/// <remarks>
+/// Delete a {_entityNameSingular} by providing a valid integer id.
+/// </remarks>
+public class Delete(IMediator _mediator)
+  : Endpoint<Delete{_entityNameSingular}Request>
+{{
+  public override void Configure()
+  {{
+    Delete(Delete{_entityNameSingular}Request.Route);
+  }}
 
-",
+  public override async Task HandleAsync(
+    Delete{_entityNameSingular}Request request,
+    CancellationToken cancellationToken)
+  {{
+    var command = new Delete{_entityNameSingular}Command(request.{_entityNameSingular}Id);
+
+    var result = await _mediator.Send(command, cancellationToken);
+
+    if (result.Status == ResultStatus.NotFound)
+    {{
+      var error = new FailureResponse(404, $""{_entityNameSingular} with ID {{request.{_entityNameSingular}Id}} not found"");
+      await SendAsync(error, statusCode: 404, cancellation: cancellationToken);
+      return;
+    }}
+
+    if (result.IsSuccess)
+    {{
+      await SendAsync(new {{ status = 200, message = $""{_entityNameSingular} with ID {{request.{_entityNameSingular}Id}} was successfully deleted"" }}, 
+        statusCode: 200, 
+        cancellation: cancellationToken);
+      return;
+    }}
+
+    await SendAsync(new FailureResponse(500, ""An unexpected error occurred.""), statusCode: 500, cancellation: cancellationToken);
+  }}
+}}",
+            
             _ => throw new ArgumentException($"Unknown operation type: {_operationType}")
         };
     }
