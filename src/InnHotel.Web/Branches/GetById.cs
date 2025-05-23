@@ -1,4 +1,4 @@
-﻿using InnHotel.UseCases.Branches.Get;
+using InnHotel.UseCases.Branches.Get;
 using InnHotel.Web.Common;
 using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 

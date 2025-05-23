@@ -1,0 +1,60 @@
+@baseUrl = https://localhost:57679
+
+### Login first to get token
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Create Room
+POST {{baseUrl}}/api/rooms
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "branchId": 1,
+    "roomTypeId": 1,
+    "roomNumber": "109",
+    "status": 0,
+    "floor": 1
+}
+
+### Get Room by ID
+GET {{baseUrl}}/api/rooms/8
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get All Rooms (Default Pagination: page 1, size 10)
+GET {{baseUrl}}/api/rooms
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Rooms - Page 1 with 5 items
+GET {{baseUrl}}/api/rooms?pageNumber=1&pageSize=5
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Rooms - Page 2 with 5 items
+GET {{baseUrl}}/api/rooms?pageNumber=2&pageSize=5
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Get Rooms - With maximum page size (50)
+GET {{baseUrl}}/api/rooms?pageSize=50
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### Update Room Details
+PUT {{baseUrl}}/api/rooms/9
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "roomTypeId": 1,
+    "roomNumber": "109",
+    "status": 0,
+    "floor": 3
+}
+
+### Delete Room
+DELETE {{baseUrl}}/api/rooms/1
+Authorization: Bearer {{login.response.body.accessToken}}

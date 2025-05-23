@@ -1,4 +1,5 @@
 ﻿using InnHotel.Core.BranchAggregate;
+using Ardalis.SharedKernel;
 
 namespace InnHotel.Core.RoomAggregate;
 
@@ -8,7 +9,7 @@ public class Room(
     string roomNumber,
     RoomStatus status,
     int floor
-) : EntityBase
+) : EntityBase, IAggregateRoot
 {
     public int BranchId { get; private set; }
         = Guard.Against.NegativeOrZero(branchId, nameof(branchId));   
@@ -30,5 +31,17 @@ public class Room(
 
     public void UpdateStatus(RoomStatus newStatus)
         => Status = newStatus;                           
+
+    public void UpdateDetails(
+        int roomTypeId,
+        string roomNumber,
+        RoomStatus status,
+        int floor)
+    {
+        RoomTypeId = Guard.Against.NegativeOrZero(roomTypeId, nameof(roomTypeId));
+        RoomNumber = Guard.Against.NullOrEmpty(roomNumber, nameof(roomNumber));
+        Status = status;
+        Floor = Guard.Against.Negative(floor, nameof(floor));
+    }
 }
 

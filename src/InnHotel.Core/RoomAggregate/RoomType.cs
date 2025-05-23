@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InnHotel.Core.BranchAggregate;
+using Ardalis.SharedKernel;
+
 namespace InnHotel.Core.RoomAggregate;
 
-public class RoomType(int branchId, string name, decimal basePrice, int capacity, string? description = null) : EntityBase
+public class RoomType(int branchId, string name, decimal basePrice, int capacity, string? description = null) : EntityBase, IAggregateRoot
 {
     public int BranchId { get; private set; } = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
     public Branch Branch { get; private set; } = null!;

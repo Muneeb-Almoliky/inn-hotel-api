@@ -1,42 +1,42 @@
-using InnHotel.UseCases.Branches.Delete;
+﻿using InnHotel.UseCases.Rooms.Delete;
 using InnHotel.Web.Common;
 using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
-namespace InnHotel.Web.Branches;
+namespace InnHotel.Web.Rooms;
 
 /// <summary>
-/// Delete a Branch.
+/// Delete a Room.
 /// </summary>
 /// <remarks>
-/// Delete a Branch by providing a valid integer id.
+/// Delete a Room by providing a valid integer id.
 /// </remarks>
 public class Delete(IMediator _mediator)
-  : Endpoint<DeleteBranchRequest>
+  : Endpoint<DeleteRoomRequest>
 {
   public override void Configure()
   {
-    Delete(DeleteBranchRequest.Route);
-    Roles(AuthRoles.SuperAdmin);
+    Delete(DeleteRoomRequest.Route);
+    Roles(AuthRoles.SuperAdmin, AuthRoles.Admin);
   }
 
   public override async Task HandleAsync(
-    DeleteBranchRequest request,
+    DeleteRoomRequest request,
     CancellationToken cancellationToken)
   {
-    var command = new DeleteBranchCommand(request.BranchId);
+    var command = new DeleteRoomCommand(request.RoomId);
 
     var result = await _mediator.Send(command, cancellationToken);
 
     if (result.Status == ResultStatus.NotFound)
     {
-      var error = new FailureResponse(404, $"Branch with ID {request.BranchId} not found");
+      var error = new FailureResponse(404, $"Room with ID {request.RoomId} not found");
       await SendAsync(error, statusCode: 404, cancellation: cancellationToken);
       return;
     }
 
     if (result.IsSuccess)
     {
-      await SendAsync(new { status = 200, message = $"Branch with ID {request.BranchId} was successfully deleted" }, 
+      await SendAsync(new { status = 200, message = $"Room with ID {request.RoomId} was successfully deleted" }, 
         statusCode: 200, 
         cancellation: cancellationToken);
       return;
