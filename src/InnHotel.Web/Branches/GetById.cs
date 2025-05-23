@@ -1,5 +1,6 @@
-using InnHotel.UseCases.Branches.Get;
+﻿using InnHotel.UseCases.Branches.Get;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Branches;
 
@@ -15,9 +16,10 @@ public class GetById(IMediator _mediator)
     public override void Configure()
     {
         Get(GetBranchByIdRequest.Route);
-    }
+        Roles(AuthRoles.SuperAdmin);
+  }
 
-    public override async Task HandleAsync(GetBranchByIdRequest request,
+  public override async Task HandleAsync(GetBranchByIdRequest request,
         CancellationToken cancellationToken)
     {
         var query = new GetBranchQuery(request.BranchId);

@@ -1,5 +1,6 @@
-using InnHotel.UseCases.Branches.List;
+﻿using InnHotel.UseCases.Branches.List;
 using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Branches;
 
@@ -15,9 +16,10 @@ public class List(IMediator _mediator)
 	public override void Configure()
 	{
 		Get(ListBranchesRequest.Route);
-	}
+    Roles(AuthRoles.SuperAdmin);
+  }
 
-	public override async Task HandleAsync(PaginationRequest request, CancellationToken cancellationToken)
+  public override async Task HandleAsync(PaginationRequest request, CancellationToken cancellationToken)
 	{
 		var query = new ListBranchesQuery(request.PageNumber, request.PageSize);
 		var result = await _mediator.Send(query, cancellationToken);
