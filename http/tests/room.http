@@ -17,14 +17,14 @@ Authorization: Bearer {{login.response.body.accessToken}}
 
 {
     "branchId": 1,
-    "roomTypeId": 1,
-    "roomNumber": "109",
+    "roomTypeId": 2,
+    "roomNumber": "115",
     "status": 0,
     "floor": 1
 }
 
 ### Get Room by ID
-GET {{baseUrl}}/api/rooms/8
+GET {{baseUrl}}/api/rooms/1
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Get All Rooms (Default Pagination: page 1, size 10)
@@ -44,17 +44,17 @@ GET {{baseUrl}}/api/rooms?pageSize=50
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Update Room Details
-PUT {{baseUrl}}/api/rooms/9
+PUT {{baseUrl}}/api/rooms/6
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.accessToken}}
 
 {
     "roomTypeId": 1,
     "roomNumber": "109",
-    "status": 0,
+    "status": 1,
     "floor": 3
 }
 
 ### Delete Room
-DELETE {{baseUrl}}/api/rooms/1
+DELETE {{baseUrl}}/api/rooms/4
 Authorization: Bearer {{login.response.body.accessToken}}

@@ -32,6 +32,20 @@ public static class SeedData
       capacity: 4,
       description: "Luxurious suite with king bed and ocean view");
 
+  public static readonly RoomType DeluxeRoom = new(
+      branchId: 2,
+      name: "Deluxe Room",
+      basePrice: 299.99m,
+      capacity: 4,
+      description: "Luxurious suite with king bed and ocean view");
+
+  public static readonly RoomType DeluxeSuite = new(
+      branchId: 2,
+      name: "Deluxe Suite",
+      basePrice: 399.99m,
+      capacity: 4,
+      description: "Luxurious suite with king bed and ocean view");
+
   public static readonly Guest TestGuest = new(
       "John",
       "Doe",
@@ -98,10 +112,12 @@ public static class SeedData
         1399.93m
     );
 
+    context.Reservations.Add(reservation);
+    await context.SaveChangesAsync();
+
     reservation.AddRoom(rooms[0].Id, 99.99m);
     reservation.AddService(breakfast.Id, 2, breakfast.Price);
 
-    context.Reservations.Add(reservation);
     await context.SaveChangesAsync();
   }
 

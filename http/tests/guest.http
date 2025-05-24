@@ -19,18 +19,18 @@ Authorization: Bearer {{login.response.body.accessToken}}
     "firstName": "Jane",
     "lastName": "Smiths",
     "idProofType": "Passport",
-    "idProofNumber": "XY7ss89013",
+    "idProofNumber": "XY7ss890135",
     "email": "jane.smiths@example.com",
     "phone": "+1234567891",
     "address": "456 Park Avenue"
 }
 
 ### Get Guest by ID
-GET {{baseUrl}}/api/guests/26
+GET {{baseUrl}}/api/guests/24
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Delete Guest
-DELETE {{baseUrl}}/api/guests/22
+DELETE {{baseUrl}}/api/guests/24
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Get All Guests (Default Pagination: page 1, size 10)
@@ -58,7 +58,7 @@ GET {{baseUrl}}/api/guests?pageNumber=0
 Authorization: Bearer {{login.response.body.accessToken}}
 
 ### Update Guest
-PUT {{baseUrl}}/api/guests/22
+PUT {{baseUrl}}/api/guests/26
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.accessToken}}
 
