@@ -1,9 +1,8 @@
-﻿
-namespace InnHotel.Web.Reservations;
+﻿namespace InnHotel.Web.Reservations;
 
 public class CreateReservationRequest
 {
-  public static string Route => "/reservations";
+  public const string Route = "api/reservations";
 
   public int GuestId { get; set; }
   public int RoomId { get; set; }

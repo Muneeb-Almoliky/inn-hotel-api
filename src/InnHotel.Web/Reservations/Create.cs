@@ -1,26 +1,20 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 using InnHotel.UseCases.Reservations.Create;
-using Microsoft.AspNetCore.Authorization;
+using InnHotel.Web.Common;
+using AuthRoles = InnHotel.Core.AuthAggregate.Roles;
 
 namespace InnHotel.Web.Reservations;
 
 /// <summary>
 /// Endpoint to create a new reservation.
 /// </summary>
-[Authorize]
-public class Create : Endpoint<CreateReservationRequest, ReservationRecord>
+public class Create(IMediator _mediator) : Endpoint<CreateReservationRequest, object>
 {
-  private readonly IMediator _mediator;
-
-  public Create(IMediator mediator)
-  {
-    _mediator = mediator;
-  }
-
   public override void Configure()
   {
     Post(CreateReservationRequest.Route);
+    Roles(AuthRoles.SuperAdmin, AuthRoles.Admin);
 
     Summary(s =>
     {
@@ -47,10 +41,80 @@ public class Create : Endpoint<CreateReservationRequest, ReservationRecord>
 
     var result = await _mediator.Send(command, cancellationToken);
 
+    if (result.Status == ResultStatus.NotFound)
+    {
+      var errorMessage = result.Errors.FirstOrDefault() ?? "Resource not found";
+      if (errorMessage.Contains("Guest"))
+      {
+        await SendAsync(
+            new FailureResponse(
+                404,
+                "Guest not found",
+                new List<string> { $"No guest exists with ID {request.GuestId}" }
+            ),
+            statusCode: 404,
+            cancellation: cancellationToken);
+      }
+      else if (errorMessage.Contains("Room"))
+      {
+        await SendAsync(
+            new FailureResponse(
+                404,
+                "Room not found",
+                new List<string> { $"No room exists with ID {request.RoomId}" }
+            ),
+            statusCode: 404,
+            cancellation: cancellationToken);
+      }
+      else
+      {
+        await SendAsync(
+            new FailureResponse(
+                404,
+                "Resource not found",
+                new List<string> { errorMessage }
+            ),
+            statusCode: 404,
+            cancellation: cancellationToken);
+      }
+      return;
+    }
+
+    if (result.Status == ResultStatus.Conflict)
+    {
+      var errorMessage = result.Errors.FirstOrDefault() ?? "Conflict occurred";
+      if (errorMessage.Contains("already booked"))
+      {
+        await SendAsync(
+            new FailureResponse(
+                409,
+                "Room unavailable for selected dates",
+                new List<string> 
+                { 
+                    $"Room {request.RoomId} is already booked from {request.CheckInDate:MMM dd, yyyy} to {request.CheckOutDate:MMM dd, yyyy}",
+                    "Please select different dates or choose another room"
+                }
+            ),
+            statusCode: 409,
+            cancellation: cancellationToken);
+      }
+      else
+      {
+        await SendAsync(
+            new FailureResponse(
+                409,
+                "Reservation conflict",
+                new List<string> { errorMessage }
+            ),
+            statusCode: 409,
+            cancellation: cancellationToken);
+      }
+      return;
+    }
+
     if (result.IsSuccess)
     {
       var reservation = result.Value;
-
       var record = new ReservationRecord(
           reservation.Id,
           reservation.GuestId,
@@ -66,23 +130,40 @@ public class Create : Endpoint<CreateReservationRequest, ReservationRecord>
           reservation.Notes
       );
 
-      await SendAsync(record, 201, cancellationToken);
+      await SendAsync(
+          new 
+          { 
+              status = 201, 
+              message = $"Reservation created successfully for guest {reservation.GuestFullName} in room {reservation.RoomNumber}", 
+              data = record 
+          },
+          statusCode: 201,
+          cancellation: cancellationToken);
       return;
     }
 
-    if (result.Status == ResultStatus.NotFound)
+    // Handle validation errors
+    if (result.Errors.Any())
     {
-      await SendNotFoundAsync(cancellationToken);
+      await SendAsync(
+          new FailureResponse(
+              400,
+              "Invalid reservation request",
+              result.Errors.ToList()
+          ),
+          statusCode: 400,
+          cancellation: cancellationToken);
       return;
     }
 
-    if (result.Status == ResultStatus.Conflict)
-    {
-      await SendErrorsAsync( 409, cancellationToken);
-      return;
-    }
-
-    // لباقي الأخطاء
-    await SendErrorsAsync(400, cancellationToken);
+    // Handle unexpected errors
+    await SendAsync(
+        new FailureResponse(
+            500,
+            "Internal server error",
+            new List<string> { "An unexpected error occurred while processing your reservation request" }
+        ),
+        statusCode: 500,
+        cancellation: cancellationToken);
   }
 }

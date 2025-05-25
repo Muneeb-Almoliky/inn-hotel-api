@@ -12,15 +12,18 @@ public class CreateReservationHandler : ICommandHandler<CreateReservationCommand
   private readonly IRepository<Reservation> _reservationRepo;
   private readonly IReadRepository<Guest> _guestRepo;
   private readonly IReadRepository<Room> _roomRepo;
+  private readonly IReadRepository<RoomType> _roomTypeRepo;
 
   public CreateReservationHandler(
       IRepository<Reservation> reservationRepo,
       IReadRepository<Guest> guestRepo,
-      IReadRepository<Room> roomRepo)
+      IReadRepository<Room> roomRepo,
+      IReadRepository<RoomType> roomTypeRepo)
   {
     _reservationRepo = reservationRepo;
     _guestRepo = guestRepo;
     _roomRepo = roomRepo;
+    _roomTypeRepo = roomTypeRepo;
   }
 
   public async Task<Result<ReservationDTO>> Handle(CreateReservationCommand request, CancellationToken ct)
@@ -53,26 +56,33 @@ public class CreateReservationHandler : ICommandHandler<CreateReservationCommand
     var created = await _reservationRepo.AddAsync(reservation, ct);
     await _reservationRepo.SaveChangesAsync(ct);
 
-    reservation.AddRoom(request.RoomId, pricePerNight: 0m);
+    // Get the room's price from the room type
+    var roomType = await _roomTypeRepo.GetByIdAsync(room.RoomTypeId, ct);
+    if (roomType is null)
+      return Result<ReservationDTO>.NotFound("RoomType", "Room type not found.");
+
+    reservation.AddRoom(request.RoomId, roomType.BasePrice);
     await _reservationRepo.SaveChangesAsync(ct);
 
+    var numberOfNights = (request.CheckOutDate.ToDateTime(TimeOnly.MinValue) - request.CheckInDate.ToDateTime(TimeOnly.MinValue)).Days;
+    var totalCost = roomType.BasePrice * numberOfNights;
 
     var dto = new ReservationDTO(
-    Id: created.Id,
-    GuestId: guest.Id,
-    GuestFullName: $"{guest.FirstName} {guest.LastName}",
-    Status: created.Status.ToString(),
-    RoomId: room.Id,
-    RoomNumber: room.RoomNumber,
-    PricePerNight: 0m,
-    CheckInDate: created.CheckInDate,
-    CheckOutDate: created.CheckOutDate,
-    TotalCost: 0m,
-    NumberOfGuests: 1,
-    Notes: null
-  );
-
+        Id: created.Id,
+        GuestId: guest.Id,
+        GuestFullName: $"{guest.FirstName} {guest.LastName}",
+        Status: created.Status.ToString(),
+        RoomId: room.Id,
+        RoomNumber: room.RoomNumber,
+        PricePerNight: roomType.BasePrice,
+        CheckInDate: created.CheckInDate,
+        CheckOutDate: created.CheckOutDate,
+        TotalCost: totalCost,
+        NumberOfGuests: 1,
+        Notes: null
+    );
 
     return Result<ReservationDTO>.Success(dto);
   }
 }
+

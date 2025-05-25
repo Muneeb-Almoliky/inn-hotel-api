@@ -1,0 +1,25 @@
+@baseUrl = https://localhost:57679
+
+### Login first to get token
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "super@innhotel.com",
+    "password": "Sup3rP@ssword!"
+}
+
+### Create Reservation
+POST {{baseUrl}}/api/reservations
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "guestId": 1,
+    "roomId": 1,
+    "checkInDate": "2024-03-20T00:00:00Z",
+    "checkOutDate": "2024-03-25T00:00:00Z",
+    "numberOfGuests": 2,
+    "notes": "Special request: Early check-in preferred"
+}
