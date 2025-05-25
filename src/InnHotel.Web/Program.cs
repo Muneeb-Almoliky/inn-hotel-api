@@ -28,9 +28,18 @@ builder.Host.UseSerilog();
 var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection");
 ValidateDatabaseConnection(connectionString);
 
+// ← إضافة تسجيل الـ DbContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString, npgsql =>
+        npgsql.EnableRetryOnFailure()
+    )
+);
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+// … بقية الكود بدون تغيير
 
 builder.Services.AddAuthorization(options =>
 {
