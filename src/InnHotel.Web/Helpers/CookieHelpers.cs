@@ -17,4 +17,15 @@ public static class CookieHelpers
       Path = "/api/auth"
     });
   }
+
+  public static void ClearRefreshCookie(HttpResponse response)
+  {
+    response.Cookies.Delete("refreshToken", new CookieOptions
+    {
+      HttpOnly = true,
+      Secure = true,
+      SameSite = SameSiteMode.None,
+      Path = "/api/auth"
+    });
+  }
 }
