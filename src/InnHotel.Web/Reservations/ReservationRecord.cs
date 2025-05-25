@@ -1,19 +1,16 @@
-using System;
+﻿namespace InnHotel.Web.Reservations;
 
-namespace InnHotel.Web.Reservations;
-
-/// <summary>
-/// Represents the data returned by the API after creating or fetching a Reservation.
-/// </summary>
 public record ReservationRecord(
     int Id,
     int GuestId,
-    string GuestFirstName,
-    string GuestLastName,
+    string GuestFullName,
+    string Status,
     int RoomId,
     string RoomNumber,
-    DateTime StartDate,
-    DateTime EndDate,
-    decimal TotalPrice,
-    string ReservationStatus
+    decimal PricePerNight,
+    DateOnly CheckInDate,
+    DateOnly CheckOutDate,
+    decimal TotalCost,
+    int NumberOfGuests,
+    string? Notes
 );

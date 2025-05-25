@@ -108,9 +108,8 @@ public static class SeedData
         TestGuest.Id,
         DateOnly.FromDateTime(DateTime.Now.AddDays(7)),
         DateOnly.FromDateTime(DateTime.Now.AddDays(14)),
-        ReservationStatus.Confirmed,
-        1399.93m
-    );
+        ReservationStatus.Confirmed
+        );
 
     context.Reservations.Add(reservation);
     await context.SaveChangesAsync();

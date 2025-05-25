@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace InnHotel.Web.Reservations;
 
@@ -26,8 +26,5 @@ public class CreateReservationValidator : AbstractValidator<CreateReservationReq
             .GreaterThan(x => x.CheckInDate)
             .WithMessage("Check-out date must be after check-in date.");
 
-        RuleFor(x => x.TotalPrice)
-            .GreaterThanOrEqualTo(0)
-            .WithMessage("Total price must be zero or more.");
     }
 }
