@@ -7,7 +7,6 @@ public static class CookieHelpers
       string token,
       int expiryDays)
   {
-    response.Cookies.Delete("refreshToken");
     response.Cookies.Append("refreshToken", token, new CookieOptions
     {
       HttpOnly = true,
@@ -16,5 +15,6 @@ public static class CookieHelpers
       Expires = DateTime.UtcNow.AddDays(expiryDays),
       Path = "/api/auth"
     });
+    response.Cookies.Delete("refreshToken");
   }
 }
