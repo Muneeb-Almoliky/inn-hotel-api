@@ -105,11 +105,12 @@ ConfigureServices(builder);
 
 var app = builder.Build();
 
-app.UsePathBase("/api");
 // app.UseRouting();
+app.UseFastEndpoints(c => {
+  c.Endpoints.RoutePrefix = "api";
+});
+
 app.UseCors();
-app.UseAuthentication();
-app.UseAuthorization();
 
 // Application startup configuration
 await ConfigureApplication(app);
