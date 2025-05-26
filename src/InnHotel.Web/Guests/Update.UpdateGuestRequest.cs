@@ -2,8 +2,8 @@
 
 public class UpdateGuestRequest
 {
-  public const string Route = "api/Guests/{GuestId:int}";
-  public static string BuildRoute(int guestId) => Route.Replace("{GuestId:int}", guestId.ToString());
+    public const string Route = "/Guests/{GuestId:int}";
+    public static string BuildRoute(int guestId) => Route.Replace("{GuestId:int}", guestId.ToString());
 
   public int GuestId { get; set; }
   public string FirstName { get; set; } = string.Empty;

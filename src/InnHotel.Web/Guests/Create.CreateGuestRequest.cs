@@ -8,7 +8,7 @@ namespace InnHotel.Web.Guests;
 /// </summary>
 public class CreateGuestRequest
 {
-  public const string Route = "api/guests";
+  public const string Route = "/guests";
 
   [Required]
   [MaxLength(50)]
