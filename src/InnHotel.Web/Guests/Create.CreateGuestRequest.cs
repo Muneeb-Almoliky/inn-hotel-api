@@ -19,7 +19,13 @@ public class CreateGuestRequest
   public string? LastName { get; set; }
 
   [Required]
+  [MaxLength(10)]
+  [RegularExpression("Male|Female", ErrorMessage = "Gender must be either 'Male' or 'Female'.")]
+  public string? Gender { get; set; }
+
+  [Required]
   [MaxLength(50)]
+  [RegularExpression("Passport|DriverLicense|NationalId", ErrorMessage = "IdProofType must be a valid value.")]
   public string? IdProofType { get; set; }
 
   [Required]
@@ -35,4 +41,3 @@ public class CreateGuestRequest
 
   public string? Address { get; set; }
 }
-
