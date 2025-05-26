@@ -25,11 +25,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
   public DbSet<ReservationRoom> ReservationRooms { get; set; }
   public DbSet<ReservationService> ReservationServices { get; set; }
 
-  protected override void OnModelCreating(ModelBuilder modelBuilder)
-  {
+ protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
     base.OnModelCreating(modelBuilder);
+
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-  }
+
+    modelBuilder.Entity<Employee>()
+        .Property(e => e.Gender)
+        .HasConversion<string>(); // يخزن كـ "Male"/"Female" في PostgreSQL
+}
+
 
   public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
   {

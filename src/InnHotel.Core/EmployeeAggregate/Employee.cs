@@ -2,6 +2,11 @@
 using InnHotel.Core.BranchAggregate;
 
 namespace InnHotel.Core.EmployeeAggregate;
+public enum Gender
+{
+    Male,
+    Female
+}
 
 public class Employee(
     int branchId,
@@ -13,11 +18,15 @@ public class Employee(
 ) : EntityBase, IAggregateRoot
 {
     public int BranchId { get; } = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
-    public Branch Branch { get; set; } = null!; 
+    public Branch Branch { get; set; } = null!;
     public string FirstName { get; } = Guard.Against.NullOrEmpty(firstName, nameof(firstName));
     public string LastName { get; } = Guard.Against.NullOrEmpty(lastName, nameof(lastName));
     public DateOnly HireDate { get; } = hireDate;
     public string Position { get; } = Guard.Against.NullOrEmpty(position, nameof(position));
     public string? UserId { get; private set; } = userId;
     public ApplicationUser? User { get; set; }
+
+    // ✅ الحقل الجديد
+    public Gender Gender { get; set; } // قابل للتعديل عند الإنشاء أو التحديث
 }
+
