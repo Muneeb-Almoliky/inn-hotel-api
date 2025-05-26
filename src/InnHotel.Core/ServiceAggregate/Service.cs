@@ -2,7 +2,7 @@
 
 namespace InnHotel.Core.ServiceAggregate;
 
-public class Service(int branchId, string name, decimal price, string? description = null) : EntityBase
+public class Service(int branchId, string name, decimal price, string? description = null) : EntityBase, IAggregateRoot
 {
     public int BranchId { get; private set; } = Guard.Against.NegativeOrZero(branchId, nameof(branchId));
     public Branch Branch { get; private set; } = null!;

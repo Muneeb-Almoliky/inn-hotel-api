@@ -1,16 +1,15 @@
-﻿namespace InnHotel.Web.Reservations;
+﻿using InnHotel.UseCases.Reservations;
+
+namespace InnHotel.Web.Reservations;
 
 public record ReservationRecord(
     int Id,
     int GuestId,
     string GuestFullName,
-    string Status,
-    int RoomId,
-    string RoomNumber,
-    decimal PricePerNight,
+    ReservationStatus Status,
+    IReadOnlyList<ReservationRoomDTO> Rooms,
+    IReadOnlyList<ReservationServiceDTO> Services,
     DateOnly CheckInDate,
     DateOnly CheckOutDate,
-    decimal TotalCost,
-    int NumberOfGuests,
-    string? Notes
+    decimal TotalCost
 );

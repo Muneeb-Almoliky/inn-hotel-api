@@ -1,8 +1,12 @@
-﻿using InnHotel.UseCases.Reservations;
+﻿using InnHotel.Core.ReservationAggregate;
+using InnHotel.UseCases.Reservations;
 
 public record CreateReservationCommand(
     int GuestId,
-    int RoomId,
+    string GuestFullName,
     DateOnly CheckInDate,
-    DateOnly CheckOutDate
+    DateOnly CheckOutDate,
+    ReservationStatus Status,
+    IReadOnlyList<ReservationRoomDTO> Rooms,
+    IReadOnlyList<ReservationServiceDTO> Services
 ) : ICommand<Result<ReservationDTO>>;

@@ -4,85 +4,99 @@ using InnHotel.Core.GuestAggregate;
 using InnHotel.Core.ReservationAggregate;
 using InnHotel.Core.ReservationAggregate.Specifications;
 using InnHotel.Core.RoomAggregate;
+using InnHotel.Core.ServiceAggregate;
 
 namespace InnHotel.UseCases.Reservations.Create;
 
-public class CreateReservationHandler : ICommandHandler<CreateReservationCommand, Result<ReservationDTO>>
+public class CreateReservationHandler(IRepository<Reservation> _reservationRepo,
+      IReadRepository<Guest> _guestRepo,
+      IReadRepository<Room> _roomRepo,
+      IReadRepository<Service> _serviceRepo)
+  : ICommandHandler<CreateReservationCommand, Result<ReservationDTO>>
 {
-  private readonly IRepository<Reservation> _reservationRepo;
-  private readonly IReadRepository<Guest> _guestRepo;
-  private readonly IReadRepository<Room> _roomRepo;
-  private readonly IReadRepository<RoomType> _roomTypeRepo;
 
-  public CreateReservationHandler(
-      IRepository<Reservation> reservationRepo,
-      IReadRepository<Guest> guestRepo,
-      IReadRepository<Room> roomRepo,
-      IReadRepository<RoomType> roomTypeRepo)
+ 
+  public async Task<Result<ReservationDTO>> Handle(
+    CreateReservationCommand request,
+    CancellationToken ct)
   {
-    _reservationRepo = reservationRepo;
-    _guestRepo = guestRepo;
-    _roomRepo = roomRepo;
-    _roomTypeRepo = roomTypeRepo;
-  }
-
-  public async Task<Result<ReservationDTO>> Handle(CreateReservationCommand request, CancellationToken ct)
-  {
+    // Check if guest exists
     var guest = await _guestRepo.GetByIdAsync(request.GuestId, ct);
-    if (guest is null)
-      return Result<ReservationDTO>.NotFound("GuestId", "Guest not found.");
+    if (guest == null)
+    {
+      return Result<ReservationDTO>.NotFound($"Guest with ID {request.GuestId} not found");
+    }
 
-    var room = await _roomRepo.GetByIdAsync(request.RoomId, ct);
-    if (room is null)
-      return Result<ReservationDTO>.NotFound("RoomId", "Room not found.");
-
-    if (request.CheckOutDate <= request.CheckInDate)
-      return Result<ReservationDTO>.Invalid(new[]
+    // Validate rooms
+    foreach (var room in request.Rooms)
+    {
+      var roomEntity = await _roomRepo.GetByIdAsync(room.RoomId, ct);
+      if (roomEntity == null)
       {
-                new ValidationError("CheckOutDate", "Check-out date must be after check-in date.")
-            });
+        return Result<ReservationDTO>.NotFound($"Room with ID {room.RoomId} not found");
+      }
 
-    var spec = new ReservationByRoomAndDateSpec(request.RoomId, request.CheckInDate, request.CheckOutDate);
-    if (await _reservationRepo.AnyAsync(spec, ct))
-      return Result<ReservationDTO>.Conflict("RoomAvailability", "Room is already booked for these dates.");
+      // Check if room is available for the requested dates
+      var roomAvailabilitySpec = new RoomAvailabilitySpec(room.RoomId, request.CheckInDate, request.CheckOutDate);
+      var existingReservation = await _reservationRepo.FirstOrDefaultAsync(roomAvailabilitySpec, ct);
+      if (existingReservation != null)
+      {
+        return Result<ReservationDTO>.Conflict(
+          $"Room {roomEntity.RoomNumber} is already booked for the selected dates"
+        );
+      }
+    }
 
+    // Validate services
+    foreach (var service in request.Services)
+    {
+      var serviceEntity = await _serviceRepo.GetByIdAsync(service.ServiceId, ct);
+      if (serviceEntity == null)
+      {
+        return Result<ReservationDTO>.NotFound($"Service with ID {service.ServiceId} not found");
+      }
+    }
+
+    // Create new reservation
     var reservation = new Reservation(
-        guestId: request.GuestId,
-        checkInDate: request.CheckInDate,
-        checkOutDate: request.CheckOutDate,
-        status: ReservationStatus.Confirmed
+      request.GuestId,
+      request.CheckInDate,
+      request.CheckOutDate,
+      request.Status
     );
 
-    var created = await _reservationRepo.AddAsync(reservation, ct);
+    // Add rooms to reservation
+    foreach (var room in request.Rooms)
+    {
+      reservation.AddRoom(room.RoomId, room.PricePerNight);
+    }
+
+    // Add services to reservation
+    foreach (var service in request.Services)
+    {
+      reservation.AddService(service.ServiceId, service.Quantity, service.UnitPrice);
+    }
+
+    // Save reservation
+    await _reservationRepo.AddAsync(reservation, ct);
     await _reservationRepo.SaveChangesAsync(ct);
 
-    // Get the room's price from the room type
-    var roomType = await _roomTypeRepo.GetByIdAsync(room.RoomTypeId, ct);
-    if (roomType is null)
-      return Result<ReservationDTO>.NotFound("RoomType", "Room type not found.");
-
-    reservation.AddRoom(request.RoomId, roomType.BasePrice);
-    await _reservationRepo.SaveChangesAsync(ct);
-
-    var numberOfNights = (request.CheckOutDate.ToDateTime(TimeOnly.MinValue) - request.CheckInDate.ToDateTime(TimeOnly.MinValue)).Days;
-    var totalCost = roomType.BasePrice * numberOfNights;
-
-    var dto = new ReservationDTO(
-        Id: created.Id,
-        GuestId: guest.Id,
-        GuestFullName: $"{guest.FirstName} {guest.LastName}",
-        Status: created.Status.ToString(),
-        RoomId: room.Id,
-        RoomNumber: room.RoomNumber,
-        PricePerNight: roomType.BasePrice,
-        CheckInDate: created.CheckInDate,
-        CheckOutDate: created.CheckOutDate,
-        TotalCost: totalCost,
-        NumberOfGuests: 1,
-        Notes: null
-    );
+        var dto = new ReservationDTO(
+          reservation.Id,
+          reservation.GuestId,
+          request.GuestFullName,
+          reservation.CheckInDate,
+          reservation.CheckOutDate,
+          reservation.Status,
+          reservation.TotalCost,
+          reservation.Rooms
+            .Select(r => new ReservationRoomDTO(r.RoomId, r.PricePerNight))
+            .ToList(),
+          reservation.Services
+            .Select(s => new ReservationServiceDTO(s.ServiceId, s.Quantity, s.TotalPrice))
+            .ToList()
+        );
 
     return Result<ReservationDTO>.Success(dto);
   }
 }
-

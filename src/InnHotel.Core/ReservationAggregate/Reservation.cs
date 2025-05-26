@@ -24,8 +24,14 @@ public class Reservation(
   public IReadOnlyCollection<ReservationService> Services => _services.AsReadOnly();
 
   public void AddRoom(int roomId, decimal pricePerNight)
-    => _rooms.Add(new ReservationRoom(Id, roomId, pricePerNight));
+  {
+    _rooms.Add(new ReservationRoom(roomId, pricePerNight));
+    TotalCost += pricePerNight;
+  }
 
   public void AddService(int serviceId, int quantity, decimal unitPrice)
-    => _services.Add(new ReservationService(Id, serviceId, quantity, unitPrice * quantity));
+  {
+    _services.Add(new ReservationService(Id, serviceId, quantity, unitPrice));
+    TotalCost += quantity * unitPrice;
+  }
 }
